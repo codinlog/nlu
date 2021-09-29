@@ -1,0 +1,19 @@
+[package]
+name = "rtt_rust"
+version = "0.1.0"
+edition = "2018"
+resolver = "2"
+
+[lib]
+name = "rtt_rust"
+crate-type = ["staticlib"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+rtt_rs = { path = "../../rtt_rs/" }
+data-encoding = { version = "*", default-features = false, features = ["alloc"] }
+hmac-sha256 = "0.1.7"
+hex = { version = "0.4.3", default-features = false, features = ["alloc"] }
+libaes = { path = "../../libaes/" }
+serde-json-core = "0.4.0"
+serde = { version = "1.0", default-features = false, features = ["derive","alloc"] }
