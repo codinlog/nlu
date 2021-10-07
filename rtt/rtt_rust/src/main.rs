@@ -65,23 +65,21 @@ struct DataJson {
     data: Data,
 }
 
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+fn main() {
     println!("Hello, world!");
     let mut data = data();
     // let data = data.replace("=", r#"\u003d\n"#);
     let auth = authorization(&data);
     println!("data==>>{};auth==>>{}", data, auth);
-    let client = Client::new();
-    let rep = client
-        .post(ADDRESS)
-        .header("Authorization", auth)
-        .header("Content-Type", CONTENT_TYPE)
-        .body(data)
-        .send()
-        .await?;
-    println!("{:?}", rep);
-    Ok(())
+    // let client = Client::new();
+    // let rep = client
+    //     .post(ADDRESS)
+    //     .header("Authorization", auth)
+    //     .header("Content-Type", CONTENT_TYPE)
+    //     .body(data)
+    //     .send()
+    //     .await?;
+    // println!("{:?}", rep);
 }
 
 fn data() -> String {
