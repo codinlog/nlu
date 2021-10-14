@@ -1,6 +1,6 @@
 #include "data.h"
 
-const static Data create_data(const char *chs)
+static Data create_data(const char *chs)
 {
     char *_data = strdup(chs);
     Data data = {
@@ -9,7 +9,7 @@ const static Data create_data(const char *chs)
     return data;
 }
 
-const static cJSON *data_to_cjson(void *data)
+static cJSON *data_to_cjson(void *data)
 {
     const DataPtr data_ptr = (DataPtr)(data);
     cJSON *data_json = cJSON_CreateObject();
@@ -22,9 +22,9 @@ static void free_data(DataPtr data_ptr)
     rt_free(data_ptr->data);
 }
 
-const struct _DataManager DataManager = {
+const _DataManager DataManager = {
     .new = create_data,
-    .super = {
+    .base = {
         .json = {
             .to_cjson = data_to_cjson,
         },

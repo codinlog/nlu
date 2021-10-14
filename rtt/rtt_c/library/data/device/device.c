@@ -1,6 +1,6 @@
 #include "device.h"
 
-const static cJSON *const device_to_cjson(void *device)
+static cJSON *device_to_cjson(void *device)
 {
     const DevicePtr device_ptr = (DevicePtr)(device);
     const cJSON *device_json = cJSON_CreateObject();
@@ -10,7 +10,7 @@ const static cJSON *const device_to_cjson(void *device)
     return device_json;
 }
 
-const static Device create_device(const char *mac_wifi, const char *mac_voice, const char *mid)
+static Device create_device(const char *mac_wifi, const char *mac_voice, const char *mid)
 {
     char *_mac_wifi = strdup(mac_wifi);
     char *_mac_voice = strdup(mac_voice);
@@ -29,9 +29,9 @@ static void free_device(DevicePtr device_ptr)
     rt_free(device_ptr->mid);
 }
 
-const struct _DeviceManager DeviceManager = {
+const _DeviceManager DeviceManager = {
     .new = create_device,
-    .super = {
+    .base = {
         .json = {
             .to_cjson = device_to_cjson,
         },

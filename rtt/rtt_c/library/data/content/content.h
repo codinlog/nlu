@@ -17,7 +17,7 @@ typedef struct
  * @param data
  * @return const cJSON* const 
  */
-const static cJSON *const content_to_cjson(void *data);
+static cJSON *content_to_cjson(void *data);
 /**
  * @brief Create a content object
  *
@@ -26,15 +26,15 @@ const static cJSON *const content_to_cjson(void *data);
  * @param query
  * @return const Content
  */
-const static Content create_content(const User user, const Device device, const char *query);
-static struct _ContentManager
+static Content create_content(const User user, const Device device, const char *query);
+typedef struct
 {
     const Content (*new)(const User, const Device, const char *);
-    Super super;
-};
+    Base base;
+} _ContentManager;
 /**
  * @brief
  *
  */
-extern const struct _ContentManager ContentManager;
+extern const _ContentManager ContentManager;
 #endif

@@ -7,13 +7,13 @@
 #define __UTIL_H__
 //aes *************************************************************************************************************
 void aes_128_cbc_init();
-char *aes_128_cbc_encrypt(const uint8_t *const, const size_t);
+char *aes_128_cbc_encrypt(const uint8_t *, const size_t);
 //hmac256*************************************************************************************************************
-char *hmac_sha256_encrypt(const uint8_t *const, const size_t);
+char *hmac_sha256_encrypt(const uint8_t *, const size_t);
 //base64 *************************************************************************************************************
-char *base64_en(const char *const, const size_t);
+char *base64_en(const char *, const size_t);
 //tohex*************************************************************************************************************
-char *to_hex(const char *const, const size_t);
+char *to_hex(const char *, const size_t);
 time_t now_sec_from_unix_epoch();
 size_t uint_len(uint32_t);
 #endif // __UTIL_H__

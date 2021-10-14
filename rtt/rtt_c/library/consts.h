@@ -6,14 +6,14 @@
 const static char HEX[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 /**
  * @brief 请求地址
- *
+ *nlu.gree.com
  */
 const static char ADDRESS[] = "https://nlu.gree.com/api/t2c/prod/ap/query\0";
 /**
  * @brief https 请求类型
  *
  */
-const static char CONTENT_TYPE[] = "application/json;charset=UTF-8\0";
+const static char CONTENT_TYPE[] = "application/json;charset=utf-8\0";
 /**
  * @brief 密钥
  *

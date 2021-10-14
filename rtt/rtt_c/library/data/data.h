@@ -15,21 +15,28 @@ typedef struct
  * @param data
  * @return const Data
  */
-const static Data create_data(const char *data);
+static Data create_data(const char *data);
+/**
+ * @brief 
+ * 
+ * @param data 
+ * @return cJSON* 
+ */
+static cJSON *data_to_cjson(void *data);
 /**
  * @brief
  *
  * @param data_ptr 
  */
 static void free_data(DataPtr data_ptr);
-static struct _DataManager
+typedef struct
 {
     Data (*new)(const char *);
-    Super super;
-};
+    Base base;
+} _DataManager;
 /**
  * @brief
  *
  */
-extern const struct _DataManager DataManager;
+extern const _DataManager DataManager;
 #endif

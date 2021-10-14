@@ -1,16 +1,16 @@
 #include "content.h"
 
-const static cJSON *const content_to_cjson(void *data)
+static cJSON *content_to_cjson(void *data)
 {
     const ContentPtr content_ptr = (ContentPtr)(data);
     const cJSON *content_json = cJSON_CreateObject();
-    cJSON_AddItemToObject(content_json, CONTENT_USER, UserManager.super.json.to_cjson(&content_ptr->user));
-    cJSON_AddItemToObject(content_json, CONTENT_DEVICE, DeviceManager.super.json.to_cjson(&content_ptr->device));
+    cJSON_AddItemToObject(content_json, CONTENT_USER, UserManager.base.json.to_cjson(&content_ptr->user));
+    cJSON_AddItemToObject(content_json, CONTENT_DEVICE, DeviceManager.base.json.to_cjson(&content_ptr->device));
     cJSON_AddStringToObject(content_json, CONTENT_QUERY, content_ptr->query);
     return content_json;
 }
 
-const static Content create_content(const User user, const Device device, const char *query)
+static Content create_content(const User user, const Device device, const char *query)
 {
     char *_query = strdup(query);
     const Content content = {
@@ -23,14 +23,14 @@ const static Content create_content(const User user, const Device device, const 
 
 static void free_content(ContentPtr content_ptr)
 {
-    UserManager.super.drop.drop_memery((void *)(&content_ptr->user));
-    DeviceManager.super.drop.drop_memery((void *)(&content_ptr->device));
+    UserManager.base.drop.drop_memery((void *)(&content_ptr->user));
+    DeviceManager.base.drop.drop_memery((void *)(&content_ptr->device));
     rt_free(content_ptr->query);
 }
 
-const struct _ContentManager ContentManager = {
+const _ContentManager ContentManager = {
     .new = create_content,
-    .super = {
+    .base = {
         .json = {
             .to_cjson = content_to_cjson},
         .drop = {

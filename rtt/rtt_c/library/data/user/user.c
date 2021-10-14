@@ -1,5 +1,5 @@
 #include "user.h"
-const static cJSON *const user_to_cjson(void *user)
+static cJSON *user_to_cjson(void *user)
 {
     const UserPtr user_ptr = (UserPtr)(user);
     const cJSON *user_json = cJSON_CreateObject();
@@ -8,7 +8,7 @@ const static cJSON *const user_to_cjson(void *user)
     return user_json;
 }
 
-const static User create_user(const char *mid, const char *uid)
+static User create_user(const char *mid, const char *uid)
 {
     char *_mid = strdup(mid);
     char *_uid = strdup(uid);
@@ -23,9 +23,9 @@ static void free_user(UserPtr user_ptr)
     rt_free(user_ptr->mid);
     rt_free(user_ptr->uid);
 }
-const struct _UserManager UserManager = {
+const _UserManager UserManager = {
     .new = create_user,
-    .super = {
+    .base = {
         .json = {
             .to_cjson = user_to_cjson,
         },

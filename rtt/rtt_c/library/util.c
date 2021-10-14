@@ -3,7 +3,7 @@
 //aes cbc pccs5加密*************************************************************************************************************
 static struct AES_ctx ctx;
 //pkcs5 填充
-static uint8_t *pkcs5(const uint8_t *const buf, size_t *len)
+static uint8_t *pkcs5(const uint8_t *buf, size_t *len)
 {
     uint32_t block_len = *len / AES_BLOCKLEN + 1;
     uint32_t padding_value = AES_BLOCKLEN - *len % AES_BLOCKLEN;
@@ -24,7 +24,7 @@ void aes_128_cbc_init()
  * @param len 字节序长度
  * @return uint8_t*  返回以'\\0'结尾的加密后的字符串指针
  */
-char *aes_128_cbc_encrypt(const uint8_t *const buf, const size_t len)
+char *aes_128_cbc_encrypt(const uint8_t *buf, const size_t len)
 {
     size_t length = len;
     uint8_t *new_buf = pkcs5(buf, &length);
@@ -42,7 +42,7 @@ char *aes_128_cbc_encrypt(const uint8_t *const buf, const size_t len)
  * @param len  字节序长度
  * @return uint8_t* 返回以'\\0'结尾的签名hex字符串
  */
-char *hmac_sha256_encrypt(const uint8_t *const data, const size_t len)
+char *hmac_sha256_encrypt(const uint8_t *data, const size_t len)
 {
     uint8_t *buf = (uint8_t *)rt_malloc((HMAC_SHA256_DIGEST_LENGTH) * sizeof(uint8_t));
     Hmacsha256_enc(KEY, rt_strlen(KEY), data, len, buf);
@@ -58,7 +58,7 @@ char *base64_en(const char *buf, const size_t len)
 }
 
 //tohex****************************************************************************************************************
-char *to_hex(const char *const buf, const size_t len)
+char *to_hex(const char *buf, const size_t len)
 {
     char *chs = (char *)rt_malloc((len * 2 + 1) * sizeof(uint8_t));
     for (uint32_t i = 0; i < len; i++)
@@ -77,7 +77,7 @@ char *to_hex(const char *const buf, const size_t len)
  */
 time_t now_sec_from_unix_epoch()
 {
-    const time_t now_sec = time((time_t *)NULL) - 8 * 60 * 60;
+    const time_t now_sec = time((time_t *)NULL) - 2 * 60;
     return now_sec;
 }
 /**

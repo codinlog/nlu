@@ -17,7 +17,7 @@ typedef struct
  * @param device
  * @return const cJSON* const 
  */
-const static cJSON *const device_to_cjson(void *device);
+static cJSON *device_to_cjson(void *device);
 /**
  * @brief Create a device object
  *
@@ -26,25 +26,25 @@ const static cJSON *const device_to_cjson(void *device);
  * @param mid
  * @return const Device
  */
-const static Device create_device(const char *mac_wifi, const char *mac_voice, const char *mid);
+static Device create_device(const char *mac_wifi, const char *mac_voice, const char *mid);
 /**
  * @brief drop device memery
  */
 static void free_device(DevicePtr device_ptr);
-static struct _DeviceManager
+typedef struct
 {
     const Device (*new)(const char *mac_wifi, const char *mac_voice, const char *mid);
-    Super super;
-};
+    Base base;
+} _DeviceManager;
 /**
  * @brief
  *    Usage:
  *      create device instance:
  *         const Device device  = DeviceManager.new(mac_wifi,mac_voice,mid);
  *      free device instance:
- *         DeviceManager.super.drop.drop_memery(&device);
+ *         DeviceManager.base.drop.drop_memery(&device);
  *      convert device to cjson:
- *          DeviceManager.super.json.to_json(&device);
+ *          DeviceManager.base.json.to_json(&device);
  */
-extern const struct _DeviceManager DeviceManager;
+extern const _DeviceManager DeviceManager;
 #endif

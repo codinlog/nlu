@@ -15,25 +15,25 @@ typedef struct
  * @param uid
  * @return const User
  */
-const static User create_user(const char *mid, const char *uid);
+static User create_user(const char *mid, const char *uid);
 /**
  * @brief convert user to cjson object
  *
  * @param user
  * @return const cJSON* const
  */
-const static cJSON *const user_to_cjson(void *user);
+static cJSON *user_to_cjson(void *user);
 /**
  * @brief
  *  free user: free mid and uid memery
  * @param user_ptr 
  */
 static void free_user(UserPtr user_ptr);
-static struct _UserManager
+typedef struct
 {
     const User (*new)(const char *, const char *);
-    Super super;
-};
+    Base base;
+} _UserManager;
 /**
  * @brief
  * Usage:
@@ -42,5 +42,5 @@ static struct _UserManager
  *  convert user to cJson:
  *    const cJson *const json = UserManager.json.to_json(&user);
  */
-extern const struct _UserManager UserManager;
+extern const _UserManager UserManager;
 #endif

@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <rtthread.h>
 #ifndef __BYTE_BUFFER_H__
 #define __BYTE_BUFFER_H__
 

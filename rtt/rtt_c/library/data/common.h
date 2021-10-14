@@ -3,7 +3,7 @@
 #define __DATA_COMMON_H__
 typedef struct
 {
-    const cJSON *const (*to_cjson)(void *);
+    const cJSON *(*to_cjson)(void *);
 } Json, *JsonPtr;
 typedef struct
 {
@@ -14,6 +14,6 @@ typedef struct
 {
     Json json;
     Drop drop;
-} Super;
+} Base;
 
 #endif
