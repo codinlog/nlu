@@ -75,6 +75,7 @@ void test_byte_buffer_puts()
     {
         printf("%c", ch1[i]);
     }
+    rt_free(ch1);
     printf("\n");
     printf("buffer get:%c\n", ByteBuffer.get_byte(&buffer));
     char *ch2 = ByteBuffer.get_range_bytes(&buffer, 0, 10);
@@ -82,11 +83,14 @@ void test_byte_buffer_puts()
     {
         printf("%c", ch2[i]);
     }
+    rt_free(ch2);
     printf("\n");
     printf("buffer.position:%d\n", buffer.position);
     printf("buffer.limit:%d\n", buffer.limit);
     printf("buffer.alloc_capacity:%d\n", buffer.alloc_capacity);
-    printf("buffer to string:%s\n", ByteBuffer.to_string(&buffer));
+    const char *str = ByteBuffer.ref_string(&buffer);
+    printf("buffer to string:%s\n", str);
+    rt_free(str);
     ByteBuffer.drop_memery(&buffer);
     printf("end ============================================\n");
 }

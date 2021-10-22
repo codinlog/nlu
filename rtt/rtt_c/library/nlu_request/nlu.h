@@ -1,5 +1,6 @@
 #include "consts.h"
 #include "data/data.h"
+#include "library/byte_buffer/byte_buffer.h"
 #include "util.h"
 #include <webclient.h>
 #ifndef __NLU_H__

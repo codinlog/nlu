@@ -1,10 +1,23 @@
+/**
+ * @file device.h
+ * @author qr-kou (codinlog@foxmail.com)
+ * @brief
+ * @version 0.1
+ * @date 2021-10-22
+ *
+ * @copyright Copyright (c) 2021
+ *
+ */
+
 #include "library/nlu_request/common.h"
 
 #ifndef __DATA_DEVICE_DEVICE_H__
 #define __DATA_DEVICE_DEVICE_H__
+
 const static char DEVICE_MAC_WIFI[] = "macWifi\0";
 const static char DEVICE_MAC_VOICE[] = "macVoice\0";
 const static char DEVICE_MID[] = "mid\0";
+
 typedef struct
 {
     const char *mac_wifi;

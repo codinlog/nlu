@@ -1,4 +1,16 @@
+/**
+ * @file user.h
+ * @author qr-kou (codinlog@foxmail.com)
+ * @brief
+ * @version 0.1
+ * @date 2021-10-22
+ *
+ * @copyright Copyright (c) 2021
+ *
+ */
+
 #include "user.h"
+
 static cJSON *user_to_cjson(void *user)
 {
     const UserPtr user_ptr = (UserPtr)(user);

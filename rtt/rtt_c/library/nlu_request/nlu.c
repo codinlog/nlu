@@ -38,16 +38,8 @@ char *create_request_auth_header(const char *const data, const size_t len)
 
 void create_request(const char *url, const char *data)
 {
-    unsigned char *buffer = RT_NULL;
-    struct webclient_session *session = RT_NULL;
-    buffer = (unsigned char *)web_malloc(2048);
-    if (buffer == RT_NULL)
-    {
-        rt_kprintf("no memory for receive response buffer.\n");
-        goto __exit;
-    }
     /* create webclient session and set header response size */
-    session = webclient_session_create(1024 * 20);
+    struct webclient_session *session = webclient_session_create(1024);
     if (session == RT_NULL)
     {
         goto __exit;
@@ -70,30 +62,26 @@ void create_request(const char *url, const char *data)
     //     goto __exit;
     // }
     rt_kprintf("webclient post response data: \n");
+    Buffer buffer = ByteBuffer.allocate(1024 * 10);
+    char *buf = rt_malloc(2048);
     do
     {
-        int bytes_read = webclient_read(session, buffer, POST_RESP_BUFSZ);
+        int bytes_read = webclient_read(session, buf, 2048);
         if (bytes_read <= 0)
         {
             break;
         }
-
-        for (int index = 0; index < bytes_read; index++)
-        {
-            rt_kprintf("%c", buffer[index]);
-        }
+        ByteBuffer.put_bytes(&buffer, buf, bytes_read);
     } while (1);
+    const char *str = ByteBuffer.ref_string(&buffer);
 
     rt_kprintf("\n");
-
 __exit:
     if (session)
     {
         webclient_close(session);
     }
+    rt_free(buf);
 
-    if (buffer)
-    {
-        web_free(buffer);
-    }
+    ByteBuffer.drop_memery(&buffer);
 }

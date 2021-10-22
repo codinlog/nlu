@@ -1,8 +1,21 @@
+/**
+ * @file user.h
+ * @author qr-kou (codinlog@foxmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2021-10-22
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #include "library/nlu_request/common.h"
 #ifndef __DATA_USER_USER_H__
 #define __DATA_USER_USER_H__
+
 const static char USER_MID[] = "mid\0";
 const static char USER_UID[] = "uid\0";
+
 typedef struct
 {
     const char *mid;

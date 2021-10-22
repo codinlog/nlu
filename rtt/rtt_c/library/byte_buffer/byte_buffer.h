@@ -1,3 +1,13 @@
+/**
+ * @file byte_buffer.h
+ * @author qr-kou (codinlog@foxmail.com)
+ * @brief
+ * @version 0.1
+ * @date 2021-10-22
+ *
+ * @copyright Copyright (c) 2021
+ *
+ */
 #include <rtthread.h>
 #include <stdint.h>
 #ifndef __BYTE_BUFFER_H__
@@ -119,8 +129,14 @@ static void buffer_reset(const BufferPtr buffer_ptr);
  *
  * @param buffer_ptr
  */
-static void buffer_drop_memory(const BufferPtr buffer_ptr);
-static char *buffer_to_string(const BufferPtr buffer_ptr);
+static void buffer_free_memory(const BufferPtr buffer_ptr);
+/**
+ * @brief 获取以'\0'结尾的字符串应用，所有权仍属于BufferPtr,请勿释放
+ *
+ * @param buffer_ptr
+ * @return char*
+ */
+static char *buffer_ref_string(const BufferPtr buffer_ptr);
 typedef struct
 {
     Buffer (*allocate)(const size_t capacity);
@@ -134,7 +150,7 @@ typedef struct
     void (*clear)(const BufferPtr buffer_ptr);
     void (*reset)(const BufferPtr buffer_ptr);
     void (*drop_memery)(const BufferPtr buffer_ptr);
-    char *(*to_string)(const BufferPtr buffer);
+    char *(*ref_string)(const BufferPtr buffer);
 } _ByteBuffer;
 
 extern const _ByteBuffer ByteBuffer;

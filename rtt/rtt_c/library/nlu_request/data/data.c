@@ -1,6 +1,18 @@
+/**
+ * @file data.c
+ * @author qr-kou (codinlog@foxmail.com)
+ * @brief
+ * @version 0.1
+ * @date 2021-10-22
+ *
+ * @copyright Copyright (c) 2021
+ *
+ */
+
 #include "data.h"
 
-static Data create_data(const char *chs)
+static Data
+create_data(const char *chs)
 {
     char *_data = rt_strdup(chs);
     Data data = {

@@ -1,8 +1,8 @@
 /***********************************************************
-    * Base64 library implementation                            *
-    * @author Ahmed Elzoughby                                  *
-    * @date July 23, 2017                                      *
-    ***********************************************************/
+ * Base64 library implementation                            *
+ * @author Ahmed Elzoughby                                  *
+ * @date July 23, 2017                                      *
+ ***********************************************************/
 
 #include "base64.h"
 

@@ -1,3 +1,13 @@
+/**
+ * @file byte_buffer.c
+ * @author qr-kou (codinlog@foxmail.com)
+ * @brief
+ * @version 0.1
+ * @date 2021-10-22
+ *
+ * @copyright Copyright (c) 2021
+ *
+ */
 #include "byte_buffer.h"
 
 static Buffer buffer_default_capacity()
@@ -119,17 +129,15 @@ static void buffer_reset(const BufferPtr buffer_ptr)
     buffer_clear(buffer_ptr);
 }
 
-static void buffer_drop_memory(const BufferPtr buffer_ptr)
+static void buffer_free_memory(const BufferPtr buffer_ptr)
 {
     rt_free(buffer_ptr->buffer);
 }
 
-static char *buffer_to_string(const BufferPtr buffer_ptr)
+static char *buffer_ref_string(const BufferPtr buffer_ptr)
 {
-    char *str = (char *)rt_malloc((buffer_ptr->limit + 1) * sizeof(int8_t));
-    rt_memcpy(str, buffer_ptr->buffer, buffer_ptr->limit);
-    str[buffer_ptr->limit] = '\0';
-    return str;
+    buffer_put_byte(buffer_ptr, '\0');
+    return buffer_ptr->buffer;
 }
 
 const _ByteBuffer ByteBuffer = {
@@ -143,6 +151,6 @@ const _ByteBuffer ByteBuffer = {
     .get_bytes = buffer_get_bytes,
     .clear = buffer_clear,
     .reset = buffer_reset,
-    .drop_memery = buffer_drop_memory,
-    .to_string = buffer_to_string,
+    .drop_memery = buffer_free_memory,
+    .ref_string = buffer_ref_string,
 };
