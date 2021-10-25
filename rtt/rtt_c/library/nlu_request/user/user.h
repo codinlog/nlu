@@ -1,12 +1,12 @@
 /**
  * @file user.h
  * @author qr-kou (codinlog@foxmail.com)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2021-10-22
- * 
+ *
  * @copyright Copyright (c) 2021
- * 
+ *
  */
 
 #include "library/nlu_request/common.h"
@@ -20,7 +20,8 @@ typedef struct
 {
     const char *mid;
     const char *uid;
-} User, *UserPtr;
+} User, *UserPtr, *const CUserPtr;
+
 /**
  * @brief Create a user object
  *
@@ -28,7 +29,8 @@ typedef struct
  * @param uid
  * @return const User
  */
-static User create_user(const char *mid, const char *uid);
+static User user_new(const char *mid, const char *uid);
+
 /**
  * @brief convert user to cjson object
  *
@@ -36,17 +38,20 @@ static User create_user(const char *mid, const char *uid);
  * @return const cJSON* const
  */
 static cJSON *user_to_cjson(void *user);
+
 /**
  * @brief
  *  free user: free mid and uid memery
  * @param user_ptr
  */
-static void free_user(UserPtr user_ptr);
+static void user_drop_memory(UserPtr user_ptr);
+
 typedef struct
 {
     const User (*new)(const char *, const char *);
     Base base;
 } _UserManager;
+
 /**
  * @brief
  * Usage:

@@ -11,17 +11,7 @@
 
 #include "device.h"
 
-static cJSON *device_to_cjson(void *device)
-{
-    const DevicePtr device_ptr = (DevicePtr)(device);
-    const cJSON *device_json = cJSON_CreateObject();
-    cJSON_AddStringToObject(device_json, DEVICE_MAC_WIFI, device_ptr->mac_wifi);
-    cJSON_AddStringToObject(device_json, DEVICE_MAC_VOICE, device_ptr->mac_voice);
-    cJSON_AddStringToObject(device_json, DEVICE_MID, device_ptr->mid);
-    return device_json;
-}
-
-static Device create_device(const char *mac_wifi, const char *mac_voice, const char *mid)
+static Device device_new(const char *mac_wifi, const char *mac_voice, const char *mid)
 {
     char *_mac_wifi = rt_strdup(mac_wifi);
     char *_mac_voice = rt_strdup(mac_voice);
@@ -33,7 +23,18 @@ static Device create_device(const char *mac_wifi, const char *mac_voice, const c
     };
     return device;
 }
-static void free_device(DevicePtr device_ptr)
+
+static cJSON *device_to_cjson(void *device)
+{
+    const DevicePtr device_ptr = (DevicePtr)(device);
+    const cJSON *device_json = cJSON_CreateObject();
+    cJSON_AddStringToObject(device_json, DEVICE_MAC_WIFI, device_ptr->mac_wifi);
+    cJSON_AddStringToObject(device_json, DEVICE_MAC_VOICE, device_ptr->mac_voice);
+    cJSON_AddStringToObject(device_json, DEVICE_MID, device_ptr->mid);
+    return device_json;
+}
+
+static void device_drop_memory(const DevicePtr device_ptr)
 {
     rt_free(device_ptr->mac_wifi);
     rt_free(device_ptr->mac_voice);
@@ -41,11 +42,11 @@ static void free_device(DevicePtr device_ptr)
 }
 
 const _DeviceManager DeviceManager = {
-    .new = create_device,
+    .new = device_new,
     .base = {
         .json = {
             .to_cjson = device_to_cjson,
         },
         .drop = {
-            .drop_memery = free_device,
+            .drop_memery = device_drop_memory,
         }}};

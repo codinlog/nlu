@@ -24,13 +24,8 @@ typedef struct
     const User user;
     const Device device;
     const char *query;
-} Content, *ContentPtr;
-/**
- * @brief convert content to cjson object
- * @param data
- * @return const cJSON* const
- */
-static cJSON *content_to_cjson(void *data);
+} Content, *ContentPtr, *const CContentPtr;
+
 /**
  * @brief Create a content object
  *
@@ -39,12 +34,28 @@ static cJSON *content_to_cjson(void *data);
  * @param query
  * @return const Content
  */
-static Content create_content(const User user, const Device device, const char *query);
+static Content content_new(const User user, const Device device, const char *query);
+
+/**
+ * @brief convert content to cjson object
+ * @param data
+ * @return const cJSON* const
+ */
+static cJSON *content_to_cjson(void *data);
+
+/**
+ * @brief 释放申请的堆空间
+ *
+ * @param content_ptr
+ */
+static void content_drop_memory(const ContentPtr content_ptr);
+
 typedef struct
 {
     const Content (*new)(const User, const Device, const char *);
     Base base;
 } _ContentManager;
+
 /**
  * @brief
  *

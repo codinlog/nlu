@@ -12,7 +12,7 @@
 #include "data.h"
 
 static Data
-create_data(const char *chs)
+data_new(const char *chs)
 {
     char *_data = rt_strdup(chs);
     Data data = {
@@ -29,17 +29,17 @@ static cJSON *data_to_cjson(void *data)
     return data_json;
 }
 
-static void free_data(DataPtr data_ptr)
+static void data_drop_memory(const DataPtr data_ptr)
 {
     rt_free(data_ptr->data);
 }
 
 const _DataManager DataManager = {
-    .new = create_data,
+    .new = data_new,
     .base = {
         .json = {
             .to_cjson = data_to_cjson,
         },
         .drop = {
-            .drop_memery = free_data,
+            .drop_memery = data_drop_memory,
         }}};

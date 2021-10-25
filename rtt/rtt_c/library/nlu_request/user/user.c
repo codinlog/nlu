@@ -20,7 +20,7 @@ static cJSON *user_to_cjson(void *user)
     return user_json;
 }
 
-static User create_user(const char *mid, const char *uid)
+static User user_new(const char *mid, const char *uid)
 {
     char *_mid = rt_strdup(mid);
     char *_uid = rt_strdup(uid);
@@ -30,17 +30,17 @@ static User create_user(const char *mid, const char *uid)
     };
     return user;
 };
-static void free_user(UserPtr user_ptr)
+static void user_drop_memory(UserPtr user_ptr)
 {
     rt_free(user_ptr->mid);
     rt_free(user_ptr->uid);
 }
 const _UserManager UserManager = {
-    .new = create_user,
+    .new = user_new,
     .base = {
         .json = {
             .to_cjson = user_to_cjson,
         },
         .drop = {
-            .drop_memery = free_user,
+            .drop_memery = user_drop_memory,
         }}};

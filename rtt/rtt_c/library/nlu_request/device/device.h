@@ -23,14 +23,8 @@ typedef struct
     const char *mac_wifi;
     const char *mac_voice;
     const char *mid;
-} Device, *DevicePtr;
-/**
- * @brief convert device  to cjson object
- *
- * @param device
- * @return const cJSON* const
- */
-static cJSON *device_to_cjson(void *device);
+} Device, *DevicePtr,*const CDevicePtr;
+
 /**
  * @brief Create a device object
  *
@@ -39,16 +33,27 @@ static cJSON *device_to_cjson(void *device);
  * @param mid
  * @return const Device
  */
-static Device create_device(const char *mac_wifi, const char *mac_voice, const char *mid);
+static Device device_new(const char *mac_wifi, const char *mac_voice, const char *mid);
+
+/**
+ * @brief convert device  to cjson object
+ *
+ * @param device
+ * @return const cJSON* const
+ */
+static cJSON *device_to_cjson(void *device);
+
 /**
  * @brief drop device memery
  */
-static void free_device(DevicePtr device_ptr);
+static void device_drop_memory(const DevicePtr device_ptr);
+
 typedef struct
 {
     const Device (*new)(const char *mac_wifi, const char *mac_voice, const char *mid);
     Base base;
 } _DeviceManager;
+
 /**
  * @brief
  *    Usage:
