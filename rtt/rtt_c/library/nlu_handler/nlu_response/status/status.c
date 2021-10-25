@@ -11,6 +11,11 @@
 
 #include "status.h"
 
+const char STATUS[] = "status\0";
+const static int ERR_STATUS_FROM_CJSON = -100;
+const static char STATUS_CODE[] = "code\0";
+const static char STATUS_ERRORTYPE[] = "errorType\0";
+
 static Status status_from_cjson(const cJSON *cjson)
 {
     const cJSON *code_cjson = cJSON_GetObjectItem(cjson, STATUS_CODE);

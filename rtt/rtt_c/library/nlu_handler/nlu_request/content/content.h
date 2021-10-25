@@ -15,10 +15,6 @@
 #ifndef __DATA_CONTENT_CONTENT_H__
 #define __DATA_CONTENT_CONTENT_H__
 
-const static char CONTENT_USER[] = "user\0";
-const static char CONTENT_DEVICE[] = "device\0";
-const static char CONTENT_QUERY[] = "query\0";
-
 typedef struct
 {
     const User user;

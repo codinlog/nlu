@@ -11,6 +11,10 @@
 
 #include "content.h"
 
+const static char CONTENT_USER[] = "user\0";
+const static char CONTENT_DEVICE[] = "device\0";
+const static char CONTENT_QUERY[] = "query\0";
+
 static Content content_new(const User user, const Device device, const char *query)
 {
     char *_query = rt_strdup(query);

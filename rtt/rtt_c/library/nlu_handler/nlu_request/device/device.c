@@ -11,6 +11,10 @@
 
 #include "device.h"
 
+const static char DEVICE_MAC_WIFI[] = "macWifi\0";
+const static char DEVICE_MAC_VOICE[] = "macVoice\0";
+const static char DEVICE_MID[] = "mid\0";
+
 static Device device_new(const char *mac_wifi, const char *mac_voice, const char *mid)
 {
     char *_mac_wifi = rt_strdup(mac_wifi);

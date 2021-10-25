@@ -14,10 +14,7 @@
 #include <rtthread.h>
 #include <stdint.h>
 
-const static char STATUS[] = "status\0";
-const static int ERR_STATUS_FROM_CJSON = -100;
-const static char STATUS_CODE[] = "code\0";
-const static char STATUS_ERRORTYPE[] = "errorType\0";
+extern const char STATUS[];
 
 typedef struct
 {

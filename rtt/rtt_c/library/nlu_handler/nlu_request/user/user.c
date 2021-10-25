@@ -11,6 +11,9 @@
 
 #include "user.h"
 
+const static char USER_MID[] = "mid\0";
+const static char USER_UID[] = "uid\0";
+
 static cJSON *user_to_cjson(void *user)
 {
     const UserPtr user_ptr = (UserPtr)(user);

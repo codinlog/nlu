@@ -15,11 +15,7 @@
 #include <cJSON.h>
 #include <rtthread.h>
 
-const static char SEMANTIC[] = "semantic\0";
-const static char SEMANTIC_DOMAIN[] = "domain\0";
-const static char SEMANTIC_INTENT[] = "intent\0";
-const static char SEMANTIC_SESSION_COMPLETE[] = "sessionComplete\0";
-const static char SEMANTIC_SKILL[] = "skill\0";
+extern const char SEMANTIC[] ;
 
 typedef struct
 {

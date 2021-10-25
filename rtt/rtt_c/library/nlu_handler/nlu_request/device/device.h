@@ -14,10 +14,6 @@
 #ifndef __DATA_DEVICE_DEVICE_H__
 #define __DATA_DEVICE_DEVICE_H__
 
-const static char DEVICE_MAC_WIFI[] = "macWifi\0";
-const static char DEVICE_MAC_VOICE[] = "macVoice\0";
-const static char DEVICE_MID[] = "mid\0";
-
 typedef struct
 {
     const char *mac_wifi;

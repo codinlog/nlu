@@ -10,6 +10,10 @@
  */
 #include "byte_buffer.h"
 
+//扩容因子
+const static float EXPANSION_FACTOR = 0.75f;
+const static size_t DEFAULT_CAPACITY = 16;
+
 static Buffer buffer_default_capacity()
 {
     return buffer_with_capacity(DEFAULT_CAPACITY);

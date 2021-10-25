@@ -12,9 +12,7 @@
 #include <stdint.h>
 #ifndef __BYTE_BUFFER_H__
 #define __BYTE_BUFFER_H__
-//扩容因子
-const static float EXPANSION_FACTOR = 0.75f;
-const static size_t DEFAULT_CAPACITY = 16;
+
 typedef struct
 {
     /**

@@ -11,6 +11,12 @@
 
 #include "semantic.h"
 
+const char SEMANTIC[] = "semantic\0";
+const static char SEMANTIC_DOMAIN[] = "domain\0";
+const static char SEMANTIC_INTENT[] = "intent\0";
+const static char SEMANTIC_SESSION_COMPLETE[] = "sessionComplete\0";
+const static char SEMANTIC_SKILL[] = "skill\0";
+
 static Semantic semantic_from_cjson(const cJSON *cjson)
 {
     const cJSON *domain_cjson = cJSON_GetObjectItem(cjson, SEMANTIC_DOMAIN);

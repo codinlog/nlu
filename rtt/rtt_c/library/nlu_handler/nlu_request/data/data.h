@@ -17,8 +17,6 @@
 #ifndef __DATA_DATA_H__
 #define __DATA_DATA_USER_H__
 
-const static char DATA_DATA[] = "data\0";
-
 typedef struct
 {
     const char *data;

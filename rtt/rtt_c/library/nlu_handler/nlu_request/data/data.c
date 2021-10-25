@@ -11,6 +11,8 @@
 
 #include "data.h"
 
+const static char DATA_DATA[] = "data\0";
+
 static Data
 data_new(const char *chs)
 {
