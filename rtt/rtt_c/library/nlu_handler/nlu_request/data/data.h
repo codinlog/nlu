@@ -9,10 +9,10 @@
  *
  */
 
-#include "library/nlu_request/common.h"
-#include "library/nlu_request/content/content.h"
-#include "library/nlu_request/device/device.h"
-#include "library/nlu_request/user/user.h"
+#include "library/nlu_handler/common/common.h"
+#include "library/nlu_handler/nlu_request/content/content.h"
+#include "library/nlu_handler/nlu_request/device/device.h"
+#include "library/nlu_handler/nlu_request/user/user.h"
 
 #ifndef __DATA_DATA_H__
 #define __DATA_DATA_USER_H__

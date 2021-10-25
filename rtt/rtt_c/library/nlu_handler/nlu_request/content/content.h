@@ -9,8 +9,8 @@
  *
  */
 
-#include "library/nlu_request/device/device.h"
-#include "library/nlu_request/user/user.h"
+#include "library/nlu_handler/nlu_request/device/device.h"
+#include "library/nlu_handler/nlu_request/user/user.h"
 
 #ifndef __DATA_CONTENT_CONTENT_H__
 #define __DATA_CONTENT_CONTENT_H__

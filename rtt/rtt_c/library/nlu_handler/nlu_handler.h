@@ -9,4 +9,5 @@
  * 
  */
 
-#include "library/nlu_request"
+#include "nlu_request/nlu_request.h"
+#include "nlu_response/nlu_response.h"

@@ -9,7 +9,7 @@
  *
  */
 
-#include "library/nlu_request/common.h"
+#include "library/nlu_handler/common/common.h"
 #ifndef __DATA_USER_USER_H__
 #define __DATA_USER_USER_H__
 

@@ -1,6 +1,6 @@
 #include "library/base64/base64.h"
 #include "library/hmac_sha256/hmac_sha256.h"
-#include "library/nlu_request/consts.h"
+#include "library/nlu_handler/nlu_request/consts.h"
 #include "library/tiny_aes/aes.h"
 #include <time.h>
 #ifndef __UTIL_H__

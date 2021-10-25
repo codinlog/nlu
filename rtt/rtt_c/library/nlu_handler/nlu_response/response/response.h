@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2021
  * 
  */
-
+const char RESPONSE[] = "response\0";
 const static char RESPONSE_TEXT[] = "text\0";
 const static char RESPONSE_HINT[] = "hint\0";
 

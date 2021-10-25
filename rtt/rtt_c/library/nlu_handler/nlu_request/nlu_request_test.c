@@ -6,7 +6,7 @@ void test_request_data()
 {
     const User user = UserManager.new("", "");
     const Device device = DeviceManager.new("48d890d762b0", "48d890d762b0", "10f03");
-    const Content content = ContentManager.new(user, device, "播放流行音乐");
+    const Content content = ContentManager.new(user, device, "播放红莲华");
     Session session = NluRequest.new(&content);
     Buffer buffer = ByteBuffer.allocate(1024 * 8);
     if (session.client != RT_NULL)

@@ -12,12 +12,12 @@
 #define __NLU_REQUEST_H__
 
 #include "consts.h"
-#include "content/content.h"
-#include "data/data.h"
-#include "device/device.h"
-#include "user/user.h"
-
 #include "library/byte_buffer/byte_buffer.h"
+#include "library/nlu_handler/nlu_request/content/content.h"
+#include "library/nlu_handler/nlu_request/data/data.h"
+#include "library/nlu_handler/nlu_request/device/device.h"
+#include "library/nlu_handler/nlu_request/user/user.h"
+
 #include <webclient.h>
 
 typedef struct

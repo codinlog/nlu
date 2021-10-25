@@ -9,7 +9,7 @@
  *
  */
 
-#include "library/nlu_request/common.h"
+#include "library/nlu_handler/common/common.h"
 
 #ifndef __DATA_DEVICE_DEVICE_H__
 #define __DATA_DEVICE_DEVICE_H__
