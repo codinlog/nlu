@@ -12,37 +12,23 @@
 #ifndef __NLU_RESPONSE__SEMANTIC_H__
 #define __NLU_RESPONSE__SEMANTIC_H__
 
+#include "library/nlu_handler/nlu_response/util.h"
 #include <cJSON.h>
 #include <rtthread.h>
-
-extern const char SEMANTIC[] ;
+extern const char SEMANTIC[];
 
 typedef struct
 {
-    const char *domain;
-    const char *intent;
-    const rt_bool_t session_complete;
-    const char *skill;
-} Semantic, *SemanticPtr, *const CSemanticPtr;
-
-/**
- * @brief
- *
- * @param cjson
- * @return Semantic
- */
-static Semantic semantic_from_cjson(const cJSON *cjson);
-
-/**
- * @brief
- *
- * @param semantic_ptr
- */
-static void semantic_drop_memory(const SemanticPtr semantic_ptr);
+    char *domain;
+    char *intent;
+    rt_bool_t session_complete;
+    char *skill;
+} Semantic, *SemanticPtr, *const SemanticCPtr;
 
 typedef struct
 {
     Semantic (*from_cjson)(const cJSON *cjson);
+    SemanticCPtr (*from_cjson_to_cptr)(const cJSON *cjson);
     void (*drop_memory)(const SemanticPtr semantic_ptr);
 } _SemanticManager;
 extern const _SemanticManager SemanticManager;

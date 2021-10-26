@@ -9,5 +9,20 @@
  *
  */
 
+#include "payload/payload.h"
 #include "semantic/semantic.h"
 #include "status/status.h"
+#include "response/response.h"
+
+typedef struct
+{
+    StatusPtr status;
+    SemanticPtr semantic;
+} Result, *ResultPtr, *const ResultCPtr;
+
+typedef struct
+{
+    Result (*from_cjson)(const cJSON *cjson);
+    Result (*from_string)(const char *str);
+    void (*drop_memory)(const ResultPtr result_ptr);
+} _NluResponse;

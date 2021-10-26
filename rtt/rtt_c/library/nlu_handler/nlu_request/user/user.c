@@ -32,12 +32,14 @@ static User user_new(const char *mid, const char *uid)
         .uid = _uid,
     };
     return user;
-};
-static void user_drop_memory(UserPtr user_ptr)
+}
+
+static void user_drop_memory(const UserPtr user_ptr)
 {
     rt_free(user_ptr->mid);
     rt_free(user_ptr->uid);
 }
+
 const _UserManager UserManager = {
     .new = user_new,
     .base = {

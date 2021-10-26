@@ -15,6 +15,29 @@ const static char DEVICE_MAC_WIFI[] = "macWifi\0";
 const static char DEVICE_MAC_VOICE[] = "macVoice\0";
 const static char DEVICE_MID[] = "mid\0";
 
+/**
+ * @brief Create a device object
+ *
+ * @param mac_wifi
+ * @param mac_voice
+ * @param mid
+ * @return const Device
+ */
+static Device device_new(const char *mac_wifi, const char *mac_voice, const char *mid);
+
+/**
+ * @brief convert device  to cjson object
+ *
+ * @param device
+ * @return const cJSON* const
+ */
+static cJSON *device_to_cjson(void *device);
+
+/**
+ * @brief drop device memery
+ */
+static void device_drop_memory(const DevicePtr device_ptr);
+
 static Device device_new(const char *mac_wifi, const char *mac_voice, const char *mid)
 {
     char *_mac_wifi = rt_strdup(mac_wifi);

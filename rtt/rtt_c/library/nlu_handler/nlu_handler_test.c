@@ -8,7 +8,7 @@ void test_nlu_handler()
 
     const User user = UserManager.new("", "");
     const Device device = DeviceManager.new("48d890d762b0", "48d890d762b0", "10f03");
-    const Content content = ContentManager.new(user, device, "播放红莲华");
+    const Body content = BodyManager.new(user, device, "关机");
     Session session = NluRequest.new(&content);
     Buffer buffer = ByteBuffer.allocate(1024 * 8);
     if (session.client != RT_NULL)
@@ -20,7 +20,7 @@ void test_nlu_handler()
             const char *data = ByteBuffer.ref_string(&buffer);
             const cJSON *cjson_parser = cJSON_Parse(data);
             const cJSON *status_cjson = cJSON_GetObjectItem(cjson_parser, STATUS);
-            if (status_cjson != RT_NULL)
+            if (!cJSON_IsNull(status_cjson))
             {
                 const Status status = StatusManager.from_cjson(status_cjson);
                 printf("code:%d\n", status.code);
@@ -28,7 +28,7 @@ void test_nlu_handler()
                 StatusManager.drop_memory(&status);
             }
             const cJSON *semantic_cjson = cJSON_GetObjectItem(cjson_parser, SEMANTIC);
-            if (semantic_cjson != RT_NULL)
+            if (!cJSON_IsNull(semantic_cjson))
             {
                 const Semantic semantic = SemanticManager.from_cjson(semantic_cjson);
                 printf("semantic.domain:%s\n", semantic.domain);
@@ -37,12 +37,28 @@ void test_nlu_handler()
                 printf("semantic.skill:%s\n", semantic.skill);
                 SemanticManager.drop_memory(&semantic);
             }
+            const cJSON *payload_cjson = cJSON_GetObjectItem(cjson_parser, PAYLOAD);
+            if (!cJSON_IsNull(payload_cjson))
+            {
+                const Payload payload = PayloadManager.from_cjson(payload_cjson);
+                printf("payload.service:%s\n", payload.service);
+                printf("payload.action:%s\n", payload.action);
+                PayloadManager.drop_memory(&payload);
+            }
+            const cJSON *response_cjson = cJSON_GetObjectItem(cjson_parser, RESPONSE);
+            if (!cJSON_IsNull(response_cjson))
+            {
+                const Response response = ResponseManager.from_cjson(response_cjson);
+                printf("response.text:%s\n", response.text);
+                printf("response.hint:%s\n", response.hint);
+                ResponseManager.drop_memory(&response);
+            }
             cJSON_Delete(cjson_parser);
         }
     }
     ByteBuffer.drop_memery(&buffer);
     NluRequest.close(&session);
-    ContentManager.base.drop.drop_memery(&content);
+    BodyManager.base.drop.drop_memery(&content);
 }
 
 MSH_CMD_EXPORT(test_nlu_handler, test nlu handler);

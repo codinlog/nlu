@@ -16,29 +16,49 @@ const static int ERR_STATUS_FROM_CJSON = -100;
 const static char STATUS_CODE[] = "code\0";
 const static char STATUS_ERRORTYPE[] = "errorType\0";
 
+inline static int status_parse_code_from_cjson(const cJSON *cjson)
+{
+    int code = copy_valueint_from_cjson(cjson);
+    return code;
+}
+
+inline static char *static_parse_error_type_from_cjson(const cJSON *cjson)
+{
+    char *error_type = copy_valuestring_from_cjson(cjson);
+    return error_type;
+}
+
 static Status status_from_cjson(const cJSON *cjson)
 {
     const cJSON *code_cjson = cJSON_GetObjectItem(cjson, STATUS_CODE);
     const cJSON *error_type_cjson = cJSON_GetObjectItem(cjson, STATUS_ERRORTYPE);
 
-    int code = ERR_STATUS_FROM_CJSON;
-    if (code_cjson != RT_NULL)
-    {
-        code = code_cjson->valueint;
-    }
-    char *error_type = RT_NULL;
-    if (error_type_cjson != RT_NULL)
-    {
-        if (error_type_cjson->valuestring != RT_NULL)
-        {
-            error_type = rt_strdup(error_type_cjson->valuestring);
-        }
-    }
+    const int code = status_parse_code_from_cjson(code_cjson);
+    const char *error_type = static_parse_error_type_from_cjson(error_type_cjson);
+
     Status status = {
         .code = code,
         .error_type = error_type,
     };
     return status;
+}
+
+static StatusCPtr status_from_cjson_to_cptr(const cJSON *cjson)
+{
+    if (cJSON_IsNull(cjson))
+    {
+        return RT_NULL;
+    }
+    const cJSON *code_cjson = cJSON_GetObjectItem(cjson, STATUS_CODE);
+    const cJSON *error_type_cjson = cJSON_GetObjectItem(cjson, STATUS_ERRORTYPE);
+
+    const int code = status_parse_code_from_cjson(code_cjson);
+    const char *error_type = static_parse_error_type_from_cjson(error_type_cjson);
+
+    StatusCPtr status_ptr = (StatusPtr)rt_malloc(sizeof(Status));
+    status_ptr->code = code;
+    status_ptr->error_type = error_type;
+    return status_ptr;
 }
 
 static void status_drop_memory(const StatusPtr status_ptr)

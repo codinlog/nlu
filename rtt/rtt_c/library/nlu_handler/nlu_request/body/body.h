@@ -1,5 +1,5 @@
 /**
- * @file data.h
+ * @file content.h
  * @author qr-kou (codinlog@foxmail.com)
  * @brief
  * @version 0.1
@@ -9,28 +9,28 @@
  *
  */
 
-#include "library/nlu_handler/common/common.h"
-#include "library/nlu_handler/nlu_request/body/body.h"
 #include "library/nlu_handler/nlu_request/device/device.h"
 #include "library/nlu_handler/nlu_request/user/user.h"
 
-#ifndef __DATA_DATA_H__
-#define __DATA_DATA_USER_H__
+#ifndef __DATA_CONTENT_CONTENT_H__
+#define __DATA_CONTENT_CONTENT_H__
 
 typedef struct
 {
-    char *data;
-} Data, *DataPtr, *const CDataPtr;
+    User user;
+    Device device;
+    char *query;
+} Body, *BodyPtr, *const BodyCPtr;
 
 typedef struct
 {
-     Data (*new)(const char *);
+     Body (*new)(const User, const Device, const char *);
     Base base;
-} _DataManager;
+} _BodyManager;
 
 /**
  * @brief
  *
  */
-extern const _DataManager DataManager;
+extern const _BodyManager BodyManager;
 #endif

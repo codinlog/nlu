@@ -9,10 +9,28 @@
  *
  */
 
+#ifndef __NLU_HANDLER_RESPONSE_H__
+#define __NLU_HANDLER_RESPONSE_H__
+
+#include "library/nlu_handler/nlu_response/util.h"
+#include <cJSON.h>
+#include <rtthread.h>
+
 extern const char RESPONSE[];
 
 typedef struct
 {
-    const char *text;
-    const char *hint;
-} _Response;
+    char *text;
+    char *hint;
+} Response, *ResponsePtr, *const ResponseCPtr;
+
+typedef struct
+{
+    Response (*from_cjson)(const cJSON *cjson);
+    ResponseCPtr (*from_cjson_to_cptr)(const cJSON *cjson);
+    void (*drop_memory)(const ResponsePtr semantic_ptr);
+    void (*drop_memory_and_self)(const ResponsePtr semantic_ptr);
+} _ResponseManager;
+
+extern const _ResponseManager ResponseManager;
+#endif //

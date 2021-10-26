@@ -9,16 +9,40 @@
  *
  */
 
-#include "content.h"
+#include "body.h"
 
 const static char CONTENT_USER[] = "user\0";
 const static char CONTENT_DEVICE[] = "device\0";
 const static char CONTENT_QUERY[] = "query\0";
 
-static Content content_new(const User user, const Device device, const char *query)
+/**
+ * @brief Create a content object
+ *
+ * @param user
+ * @param device
+ * @param query
+ * @return const Content
+ */
+static Body body_new(const User user, const Device device, const char *query);
+
+/**
+ * @brief convert content to cjson object
+ * @param data
+ * @return const cJSON* const
+ */
+static cJSON *body_to_cjson(void *data);
+
+/**
+ * @brief 释放申请的堆空间
+ *
+ * @param content_ptr
+ */
+static void body_drop_memory(const BodyPtr content_ptr);
+
+static Body body_new(const User user, const Device device, const char *query)
 {
     char *_query = rt_strdup(query);
-    const Content content = {
+    const Body content = {
         .user = user,
         .device = device,
         .query = _query,
@@ -26,9 +50,9 @@ static Content content_new(const User user, const Device device, const char *que
     return content;
 }
 
-static cJSON *content_to_cjson(void *data)
+static cJSON *body_to_cjson(void *data)
 {
-    const ContentPtr content_ptr = (ContentPtr)(data);
+    const BodyPtr content_ptr = (BodyPtr)(data);
     const cJSON *content_json = cJSON_CreateObject();
     cJSON_AddItemToObject(content_json, CONTENT_USER, UserManager.base.json.to_cjson(&content_ptr->user));
     cJSON_AddItemToObject(content_json, CONTENT_DEVICE, DeviceManager.base.json.to_cjson(&content_ptr->device));
@@ -36,18 +60,18 @@ static cJSON *content_to_cjson(void *data)
     return content_json;
 }
 
-static void content_drop_memory(const ContentPtr content_ptr)
+static void body_drop_memory(const BodyPtr content_ptr)
 {
     UserManager.base.drop.drop_memery((void *)(&content_ptr->user));
     DeviceManager.base.drop.drop_memery((void *)(&content_ptr->device));
     rt_free(content_ptr->query);
 }
 
-const _ContentManager ContentManager = {
-    .new = content_new,
+const _BodyManager BodyManager = {
+    .new = body_new,
     .base = {
         .json = {
-            .to_cjson = content_to_cjson},
+            .to_cjson = body_to_cjson},
         .drop = {
-            .drop_memery = content_drop_memory,
+            .drop_memery = body_drop_memory,
         }}};

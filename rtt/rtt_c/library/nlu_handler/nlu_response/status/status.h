@@ -10,6 +10,7 @@
  */
 #ifndef __NLU_RESPONSE_STATUS_H__
 #define __NLU_RESPONSE_STATUS_H__
+#include "library/nlu_handler/nlu_response/util.h"
 #include <CJSON.h>
 #include <rtthread.h>
 #include <stdint.h>
@@ -18,27 +19,15 @@ extern const char STATUS[];
 
 typedef struct
 {
-    const int code;
-    const char *error_type;
-} Status, *StatusPtr, *const CStatusPtr;
+    int code;
+    char *error_type;
+} Status, *StatusPtr, *const StatusCPtr;
 
-/**
- * @brief 从cjson中返回Status
- *
- * @param cjson
- * @return Status
- */
-static Status status_from_cjson(const cJSON *cjson);
-/**
- * @brief 释放内存
- *
- * @param status_ptr
- */
-static void status_drop_memory(const StatusPtr status_ptr);
 typedef struct
 {
-    Status (*from_cjson)(const cJSON *cjosn);
-    void (*drop_memory)(const StatusPtr status_ptr);
+     Status (*from_cjson)(const cJSON *cjosn);
+     StatusCPtr (*from_cjson_to_cptr)(const cJSON *cjosn);
+     void (*drop_memory)(const StatusPtr status_ptr);
 } _StatusManager;
 
 extern const _StatusManager StatusManager;

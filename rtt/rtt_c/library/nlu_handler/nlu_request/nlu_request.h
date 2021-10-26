@@ -13,7 +13,7 @@
 
 #include "consts.h"
 #include "library/byte_buffer/byte_buffer.h"
-#include "library/nlu_handler/nlu_request/content/content.h"
+#include "library/nlu_handler/nlu_request/body/body.h"
 #include "library/nlu_handler/nlu_request/data/data.h"
 #include "library/nlu_handler/nlu_request/device/device.h"
 #include "library/nlu_handler/nlu_request/user/user.h"
@@ -22,53 +22,13 @@
 
 typedef struct
 {
-    const struct webclient_session *client;
-    const char *body;
-} Session, *SessionPtr, *const CSessionPtr;
-
-/**
- * @brief 创建webclient session实例，并添加响应请求头
- *
- * @param content_ptr
- * @return Session
- */
-static Session request_new_session(const CContentPtr content_ptr);
-
-/**
- * @brief 完成post请求
- *
- * @param session_ptr
- * @param buffer
- * @param body
- */
-static int request_finish_post(const SessionPtr session_ptr, const BufferPtr buffer_ptr);
-
-/**
- * @brief
- *
- * @param content_ptr
- * @return char*
- */
-static char *request_new_body(const CContentPtr content_ptr);
-
-/**
- * @brief
- *
- * @param body
- * @return char*
- */
-static char *request_new_auth(const char *body);
-
-/**
- * @brief 释放申请空间
- *
- * @param session_ptr
- */
-static void request_close(const SessionPtr session_ptr);
+    struct webclient_session *client;
+    char *body;
+} Session, *SessionPtr, *const SessionCPtr;
 
 typedef struct
 {
-    Session (*new)(const CContentPtr content_ptr);
+    Session (*new)(const BodyPtr content_ptr);
     int (*post)(const SessionPtr session_ptr, const BufferPtr buffer_ptr);
     void (*close)(const SessionPtr session_ptr);
 } _NluRequest;

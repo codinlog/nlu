@@ -15,37 +15,13 @@
 
 typedef struct
 {
-    const char *mid;
-    const char *uid;
-} User, *UserPtr, *const CUserPtr;
-
-/**
- * @brief Create a user object
- *
- * @param mid
- * @param uid
- * @return const User
- */
-static User user_new(const char *mid, const char *uid);
-
-/**
- * @brief convert user to cjson object
- *
- * @param user
- * @return const cJSON* const
- */
-static cJSON *user_to_cjson(void *user);
-
-/**
- * @brief
- *  free user: free mid and uid memery
- * @param user_ptr
- */
-static void user_drop_memory(UserPtr user_ptr);
+    char *mid;
+    char *uid;
+} User, *UserPtr, *const UserCPtr;
 
 typedef struct
 {
-    const User (*new)(const char *, const char *);
+     User (*new)(const char *, const char *);
     Base base;
 } _UserManager;
 

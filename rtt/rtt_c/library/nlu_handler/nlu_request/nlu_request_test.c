@@ -6,7 +6,7 @@ void test_request_data()
 {
     const User user = UserManager.new("", "");
     const Device device = DeviceManager.new("48d890d762b0", "48d890d762b0", "10f03");
-    const Content content = ContentManager.new(user, device, "播放红莲华");
+    const Body content = BodyManager.new(user, device, "播放红莲华");
     Session session = NluRequest.new(&content);
     Buffer buffer = ByteBuffer.allocate(1024 * 8);
     if (session.client != RT_NULL)
@@ -25,7 +25,7 @@ void test_request_data()
     }
     ByteBuffer.drop_memery(&buffer);
     NluRequest.close(&session);
-    ContentManager.base.drop.drop_memery(&content);
+    BodyManager.base.drop.drop_memery(&content);
 }
 
 MSH_CMD_EXPORT(test_request_data, test requrest data);

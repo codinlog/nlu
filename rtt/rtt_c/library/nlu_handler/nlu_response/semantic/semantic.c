@@ -17,6 +17,37 @@ const static char SEMANTIC_INTENT[] = "intent\0";
 const static char SEMANTIC_SESSION_COMPLETE[] = "sessionComplete\0";
 const static char SEMANTIC_SKILL[] = "skill\0";
 
+inline static char *semantic_parse_domain_from_cjson(const cJSON *cjson)
+{
+    char *domain = copy_valuestring_from_cjson(cjson);
+    return domain;
+}
+
+inline static char *semantic_parse_intent_from_cjson(const cJSON *cjson)
+{
+    char *intent = copy_valuestring_from_cjson(cjson);
+    return intent;
+}
+
+inline static rt_bool_t semantic_parse_session_complete_from_cjson(const cJSON *cjson)
+{
+    rt_bool_t session_complete = copy_valuebool_from_cjson(cjson);
+    return session_complete;
+}
+
+inline static char *semantic_parse_skill_from_cjson(const cJSON *cjosn)
+{
+
+    char *skill = copy_valuestring_from_cjson(cjosn);
+    return skill;
+}
+
+/**
+ * @brief 如果cjosn为null，则domain、intent、skill为null，session_complete为false
+ *
+ * @param cjson
+ * @return Semantic
+ */
 static Semantic semantic_from_cjson(const cJSON *cjson)
 {
     const cJSON *domain_cjson = cJSON_GetObjectItem(cjson, SEMANTIC_DOMAIN);
@@ -24,42 +55,39 @@ static Semantic semantic_from_cjson(const cJSON *cjson)
     const cJSON *session_complete_cjson = cJSON_GetObjectItem(cjson, SEMANTIC_SESSION_COMPLETE);
     const cJSON *skill_cjson = cJSON_GetObjectItem(cjson, SEMANTIC_SKILL);
 
-    char *domain = RT_NULL;
-    if (domain_cjson != RT_NULL)
-    {
-        if (domain_cjson->valuestring != RT_NULL)
-        {
-            domain = rt_strdup(domain_cjson->valuestring);
-        }
-    }
-    char *intent = RT_NULL;
-    if (intent_cjson != RT_NULL)
-    {
-        if (intent_cjson->valuestring != RT_NULL)
-        {
-            intent = rt_strdup(intent_cjson->valuestring);
-        }
-    }
-    rt_bool_t session_complete = RT_FALSE;
-    if (session_complete_cjson != RT_NULL)
-    {
-        session_complete = session_complete_cjson->valueint;
-    }
-    char *skill = RT_NULL;
-    if (skill_cjson != RT_NULL)
-    {
-        if (skill_cjson->valuestring != RT_NULL)
-        {
-            skill = rt_strdup(skill_cjson->valuestring);
-        }
-    }
-    Semantic semantic = {
-        .domain = domain,
-        .intent = intent,
-        .session_complete = session_complete,
-        .skill = skill,
+    const Semantic semantic = {
+        .domain = semantic_parse_domain_from_cjson(domain_cjson),
+        .intent = semantic_parse_intent_from_cjson(intent_cjson),
+        .session_complete = semantic_parse_session_complete_from_cjson(session_complete_cjson),
+        .skill = semantic_parse_skill_from_cjson(skill_cjson),
     };
     return semantic;
+}
+
+/**
+ * @brief 如果cjson为null，则返回null
+ * 
+ * @param cjson 
+ * @return SemanticCPtr 
+ */
+static SemanticCPtr semantic_from_cjson_to_cptr(const cJSON *cjson)
+{
+    if (cJSON_IsNull(cjson))
+    {
+        return RT_NULL;
+    }
+    const cJSON *domain_cjson = cJSON_GetObjectItem(cjson, SEMANTIC_DOMAIN);
+    const cJSON *intent_cjson = cJSON_GetObjectItem(cjson, SEMANTIC_INTENT);
+    const cJSON *session_complete_cjson = cJSON_GetObjectItem(cjson, SEMANTIC_SESSION_COMPLETE);
+    const cJSON *skill_cjson = cJSON_GetObjectItem(cjson, SEMANTIC_SKILL);
+
+    SemanticCPtr semantic_ptr = (SemanticPtr)rt_malloc(sizeof(Semantic));
+    semantic_ptr->domain = semantic_parse_domain_from_cjson(domain_cjson);
+    semantic_ptr->intent = semantic_parse_intent_from_cjson(intent_cjson);
+    semantic_ptr->session_complete = semantic_parse_session_complete_from_cjson(session_complete_cjson);
+    semantic_ptr->skill = semantic_parse_skill_from_cjson(skill_cjson);
+
+    return semantic_ptr;
 }
 
 static void semantic_drop_memory(const SemanticPtr semantic_ptr)
