@@ -9,13 +9,14 @@
  *
  */
 
+#ifndef __DATA_DATA_H__
+#define __DATA_DATA_USER_H__
+
 #include "library/nlu_handler/common/common.h"
 #include "library/nlu_handler/nlu_request/body/body.h"
 #include "library/nlu_handler/nlu_request/device/device.h"
 #include "library/nlu_handler/nlu_request/user/user.h"
-
-#ifndef __DATA_DATA_H__
-#define __DATA_DATA_USER_H__
+#include <rtthread.h>
 
 typedef struct
 {
@@ -24,7 +25,7 @@ typedef struct
 
 typedef struct
 {
-     Data (*new)(const char *);
+    Data (*new)(const char *);
     Base base;
 } _DataManager;
 

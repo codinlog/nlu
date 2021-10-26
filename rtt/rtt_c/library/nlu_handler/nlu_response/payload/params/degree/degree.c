@@ -54,9 +54,9 @@ static Degree degree_from_cjson(const cJSON *cjson)
     return degree;
 }
 
-static DegreeCPtr degree_from_cjson_to_ptrc(const cJSON *cjson)
+static DegreeCPtr degree_from_cjson_to_cptr(const cJSON *cjson)
 {
-    if (cJSON_IsNull(cjson))
+    if (cjson == RT_NULL || cJSON_IsNull(cjson))
     {
         return RT_NULL;
     }
@@ -78,8 +78,11 @@ static DegreeCPtr degree_from_cjson_to_ptrc(const cJSON *cjson)
  */
 static void degree_drop_memory(const DegreePtr degree_ptr)
 {
-    rt_free(degree_ptr->orgin);
-    rt_free(degree_ptr->norm);
+    if (degree_ptr != RT_NULL)
+    {
+        rt_free(degree_ptr->orgin);
+        rt_free(degree_ptr->norm);
+    }
 }
 
 static void degree_drop_memory_and_self(const DegreePtr degree_ptr)
@@ -90,7 +93,7 @@ static void degree_drop_memory_and_self(const DegreePtr degree_ptr)
 
 const _DegreeManager DegreeManager = {
     .from_cjson = degree_from_cjson,
-    .from_cjson_to_cptr = degree_from_cjson_to_ptrc,
+    .from_cjson_to_cptr = degree_from_cjson_to_cptr,
     .drop_memory = degree_drop_memory,
     .drop_memory_and_self = degree_drop_memory_and_self,
 };

@@ -9,9 +9,11 @@
  *
  */
 
-#include "library/nlu_handler/common/common.h"
 #ifndef __DATA_USER_USER_H__
 #define __DATA_USER_USER_H__
+
+#include "library/nlu_handler/common/common.h"
+#include <rtthread.h>
 
 typedef struct
 {
@@ -21,7 +23,7 @@ typedef struct
 
 typedef struct
 {
-     User (*new)(const char *, const char *);
+    User (*new)(const char *, const char *);
     Base base;
 } _UserManager;
 

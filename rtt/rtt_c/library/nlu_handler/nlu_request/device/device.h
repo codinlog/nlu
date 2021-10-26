@@ -9,10 +9,11 @@
  *
  */
 
-#include "library/nlu_handler/common/common.h"
-
 #ifndef __DATA_DEVICE_DEVICE_H__
 #define __DATA_DEVICE_DEVICE_H__
+
+#include "library/nlu_handler/common/common.h"
+#include <rtthread.h>
 
 typedef struct
 {
@@ -23,7 +24,7 @@ typedef struct
 
 typedef struct
 {
-     Device (*new)(const char *mac_wifi, const char *mac_voice, const char *mid);
+    Device (*new)(const char *mac_wifi, const char *mac_voice, const char *mid);
     Base base;
 } _DeviceManager;
 

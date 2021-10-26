@@ -50,7 +50,7 @@ static Payload payload_from_cjson(const cJSON *cjson)
 
 static PayloadCPtr payload_from_cjson_to_cptr(const cJSON *cjson)
 {
-    if (cJSON_IsNull(cjson))
+    if (cjson == RT_NULL || cJSON_IsNull(cjson))
     {
         return RT_NULL;
     }
@@ -68,9 +68,12 @@ static PayloadCPtr payload_from_cjson_to_cptr(const cJSON *cjson)
 
 static void payload_drop_memery(const PayloadPtr payload_ptr)
 {
-    rt_free(payload_ptr->service);
-    rt_free(payload_ptr->action);
-    ParamsManager.drop_memory_and_self(payload_ptr->params);
+    if (payload_ptr != RT_NULL)
+    {
+        rt_free(payload_ptr->service);
+        rt_free(payload_ptr->action);
+        ParamsManager.drop_memory_and_self(payload_ptr->params);
+    }
 }
 
 static void payload_drop_memery_and_self(const PayloadPtr payload_ptr)

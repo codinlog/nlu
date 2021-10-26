@@ -32,7 +32,7 @@ static Params params_from_cjson(const cJSON *cjson)
 
 static ParamsCPtr params_from_cjson_to_cptr(const cJSON *cjson)
 {
-    if (cJSON_IsNull(cjson))
+    if (cjson == RT_NULL || cJSON_IsNull(cjson))
     {
         return RT_NULL;
     }
@@ -46,7 +46,10 @@ static ParamsCPtr params_from_cjson_to_cptr(const cJSON *cjson)
 
 static void params_drop_memory(const ParamsPtr params_ptr)
 {
-    DegreeManager.drop_memory_and_self(params_ptr->degree);
+    if (params_ptr != RT_NULL)
+    {
+        DegreeManager.drop_memory_and_self(params_ptr->degree);
+    }
 }
 
 static void params_drop_memory_and_self(const ParamsPtr params_ptr)

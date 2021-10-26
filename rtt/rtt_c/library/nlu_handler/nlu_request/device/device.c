@@ -63,9 +63,12 @@ static cJSON *device_to_cjson(void *device)
 
 static void device_drop_memory(const DevicePtr device_ptr)
 {
-    rt_free(device_ptr->mac_wifi);
-    rt_free(device_ptr->mac_voice);
-    rt_free(device_ptr->mid);
+    if (device_ptr != RT_NULL)
+    {
+        rt_free(device_ptr->mac_wifi);
+        rt_free(device_ptr->mac_voice);
+        rt_free(device_ptr->mid);
+    }
 }
 
 const _DeviceManager DeviceManager = {

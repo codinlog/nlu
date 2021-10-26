@@ -36,8 +36,11 @@ static User user_new(const char *mid, const char *uid)
 
 static void user_drop_memory(const UserPtr user_ptr)
 {
-    rt_free(user_ptr->mid);
-    rt_free(user_ptr->uid);
+    if (user_ptr != RT_NULL)
+    {
+        rt_free(user_ptr->mid);
+        rt_free(user_ptr->uid);
+    }
 }
 
 const _UserManager UserManager = {

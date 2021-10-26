@@ -8,7 +8,7 @@ void test_nlu_handler()
 
     const User user = UserManager.new("", "");
     const Device device = DeviceManager.new("48d890d762b0", "48d890d762b0", "10f03");
-    const Body content = BodyManager.new(user, device, "关机");
+    const Body content = BodyManager.new(user, device, "18度");
     Session session = NluRequest.new(&content);
     Buffer buffer = ByteBuffer.allocate(1024 * 8);
     if (session.client != RT_NULL)
@@ -43,6 +43,16 @@ void test_nlu_handler()
                 const Payload payload = PayloadManager.from_cjson(payload_cjson);
                 printf("payload.service:%s\n", payload.service);
                 printf("payload.action:%s\n", payload.action);
+                if (payload.params != RT_NULL)
+                {
+                    printf("payload.params->degree->norm:%s\n", payload.params->degree->norm);
+                    printf("payload.params->degree->orgin:%s\n", payload.params->degree->orgin);
+                    printf("payload.params->degree->code:%d\n", payload.params->degree->code);
+                }
+                else
+                {
+                    printf("payload.params is null\n");
+                }
                 PayloadManager.drop_memory(&payload);
             }
             const cJSON *response_cjson = cJSON_GetObjectItem(cjson_parser, RESPONSE);

@@ -9,11 +9,12 @@
  *
  */
 
-#include "library/nlu_handler/nlu_request/device/device.h"
-#include "library/nlu_handler/nlu_request/user/user.h"
-
 #ifndef __DATA_CONTENT_CONTENT_H__
 #define __DATA_CONTENT_CONTENT_H__
+
+#include "library/nlu_handler/nlu_request/device/device.h"
+#include "library/nlu_handler/nlu_request/user/user.h"
+#include <rtthread.h>
 
 typedef struct
 {
@@ -24,7 +25,7 @@ typedef struct
 
 typedef struct
 {
-     Body (*new)(const User, const Device, const char *);
+    Body (*new)(const User, const Device, const char *);
     Base base;
 } _BodyManager;
 

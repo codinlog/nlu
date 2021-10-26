@@ -66,13 +66,13 @@ static Semantic semantic_from_cjson(const cJSON *cjson)
 
 /**
  * @brief 如果cjson为null，则返回null
- * 
- * @param cjson 
- * @return SemanticCPtr 
+ *
+ * @param cjson
+ * @return SemanticCPtr
  */
 static SemanticCPtr semantic_from_cjson_to_cptr(const cJSON *cjson)
 {
-    if (cJSON_IsNull(cjson))
+    if (cjson == RT_NULL || cJSON_IsNull(cjson))
     {
         return RT_NULL;
     }
@@ -92,12 +92,23 @@ static SemanticCPtr semantic_from_cjson_to_cptr(const cJSON *cjson)
 
 static void semantic_drop_memory(const SemanticPtr semantic_ptr)
 {
-    rt_free(semantic_ptr->domain);
-    rt_free(semantic_ptr->intent);
-    rt_free(semantic_ptr->skill);
+    if (semantic_ptr != RT_NULL)
+    {
+        rt_free(semantic_ptr->domain);
+        rt_free(semantic_ptr->intent);
+        rt_free(semantic_ptr->skill);
+    }
+}
+
+static void semantic_drop_memory_self(const SemanticPtr semantic_ptr)
+{
+    semantic_drop_memory(semantic_ptr);
+    rt_free(semantic_ptr);
 }
 
 const _SemanticManager SemanticManager = {
     .from_cjson = semantic_from_cjson,
+    .from_cjson_to_cptr = semantic_from_cjson_to_cptr,
     .drop_memory = semantic_drop_memory,
+    .drop_memory_and_self = semantic_drop_memory_self,
 };

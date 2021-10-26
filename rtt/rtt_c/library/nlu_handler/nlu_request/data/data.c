@@ -56,7 +56,10 @@ static cJSON *data_to_cjson(void *data)
 
 static void data_drop_memory(const DataPtr data_ptr)
 {
-    rt_free(data_ptr->data);
+    if (data_ptr != RT_NULL)
+    {
+        rt_free(data_ptr->data);
+    }
 }
 
 const _DataManager DataManager = {

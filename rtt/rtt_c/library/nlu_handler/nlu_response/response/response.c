@@ -65,7 +65,7 @@ static Response response_from_cjson(const cJSON *cjson)
  */
 static ResponseCPtr response_from_cjson_to_cptr(const cJSON *cjson)
 {
-    if (cJSON_IsNull(cjson))
+    if (cjson == RT_NULL || cJSON_IsNull(cjson))
     {
         return RT_NULL;
     }
@@ -81,8 +81,11 @@ static ResponseCPtr response_from_cjson_to_cptr(const cJSON *cjson)
 
 static void response_drop_memory(const ResponsePtr response_ptr)
 {
-    rt_free(response_ptr->text);
-    rt_free(response_ptr->hint);
+    if (response_ptr != RT_NULL)
+    {
+        rt_free(response_ptr->text);
+        rt_free(response_ptr->hint);
+    }
 }
 
 static void response_drop_memory_and_self(const ResponsePtr response_ptr)

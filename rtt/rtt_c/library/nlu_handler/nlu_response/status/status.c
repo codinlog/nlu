@@ -45,7 +45,7 @@ static Status status_from_cjson(const cJSON *cjson)
 
 static StatusCPtr status_from_cjson_to_cptr(const cJSON *cjson)
 {
-    if (cJSON_IsNull(cjson))
+    if (cjson == RT_NULL || cJSON_IsNull(cjson))
     {
         return RT_NULL;
     }
@@ -63,7 +63,16 @@ static StatusCPtr status_from_cjson_to_cptr(const cJSON *cjson)
 
 static void status_drop_memory(const StatusPtr status_ptr)
 {
-    rt_free(status_ptr->error_type);
+    if (status_ptr != RT_NULL)
+    {
+        rt_free(status_ptr->error_type);
+    }
+}
+
+static void status_drop_memory_and_self(const StatusPtr status_ptr)
+{
+    status_drop_memory(status_ptr);
+    rt_free(status_ptr);
 }
 
 const _StatusManager StatusManager = {

@@ -62,9 +62,12 @@ static cJSON *body_to_cjson(void *data)
 
 static void body_drop_memory(const BodyPtr content_ptr)
 {
-    UserManager.base.drop.drop_memery((void *)(&content_ptr->user));
-    DeviceManager.base.drop.drop_memery((void *)(&content_ptr->device));
-    rt_free(content_ptr->query);
+    if (content_ptr != RT_NULL)
+    {
+        UserManager.base.drop.drop_memery((void *)(&content_ptr->user));
+        DeviceManager.base.drop.drop_memery((void *)(&content_ptr->device));
+        rt_free(content_ptr->query);
+    }
 }
 
 const _BodyManager BodyManager = {
