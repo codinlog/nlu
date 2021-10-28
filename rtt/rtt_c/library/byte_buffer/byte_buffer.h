@@ -19,23 +19,23 @@ typedef struct
      * @brief 字节缓存
      *
      */
-    int8_t *buffer;
+    int8_t *_buffer;
     /**
      * @brief 当前位置
      *
      */
-    size_t position;
-    size_t limit;
+    size_t _position;
+    size_t _limit;
     /**
      * @brief 自动扩容后的大小
      *
      */
-    size_t alloc_capacity;
+    size_t _alloc_capacity;
     /**
      * @brief 初始化容量
      *
      */
-    const size_t capacity;
+    const size_t _capacity;
 } Buffer, *BufferPtr;
 
 typedef struct

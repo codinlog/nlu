@@ -54,6 +54,7 @@ static PayloadCPtr payload_from_cjson_to_cptr(const cJSON *cjson)
     {
         return RT_NULL;
     }
+
     const cJSON *service_cjson = cJSON_GetObjectItem(cjson, PAYLOAD_SERVICE);
     const cJSON *action_cjson = cJSON_GetObjectItem(cjson, PAYLOAD_ACTION);
     const cJSON *params_cjson = cJSON_GetObjectItem(cjson, PAYLOAD_PARAMS);

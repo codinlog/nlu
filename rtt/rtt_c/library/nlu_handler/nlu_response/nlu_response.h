@@ -9,10 +9,12 @@
  *
  */
 
+#include "list/list.h"
 #include "payload/payload.h"
+#include "response/response.h"
+#include "semantic/domain_consts.h"
 #include "semantic/semantic.h"
 #include "status/status.h"
-#include "response/response.h"
 
 typedef struct
 {

@@ -18,7 +18,7 @@ static Buffer buffer_default_capacity();
 /**
  * @brief
  *
- * @param capacity
+ * @param _capacity
  * @return Buffer
  */
 static Buffer buffer_with_capacity(const size_t capacity);
@@ -72,34 +72,34 @@ static int8_t *buffer_get_range_bytes(const BufferPtr buffer_ptr, const size_t s
  */
 static void buffer_check_resize(const BufferPtr buffer_ptr, const size_t put_len);
 /**
- * @brief 计算扩容大小 alloc_capacity = alloc_capacity * (EXPANSION_FACTOR + 1);
+ * @brief 计算扩容大小 _alloc_capacity = _alloc_capacity * (EXPANSION_FACTOR + 1);
  *
  * @param now_size
- * @param position
+ * @param _position
  * @param put_len
  * @return size_t
  */
 static size_t buffer_calculate_resize(const size_t now_size, const size_t position, const size_t put_len);
 /**
- * @brief 当position >= new_capacity时，扩容buffer,仅内部使用
+ * @brief 当_position >= new_capacity时，扩容_buffer,仅内部使用
  *
  * @param buffer_ptr
  */
 static void buffer_resize(const BufferPtr buffer_ptr, const size_t size);
 /**
- * @brief 将buffer内容置为 0
+ * @brief 将_buffer内容置为 0
  *
  * @param buffer_ptr
  */
 static void buffer_clear(const BufferPtr buffer_ptr);
 /**
- * @brief 将buffer内容清除，同时buffer恢复初始大小
+ * @brief 将_buffer内容清除，同时_buffer恢复初始大小
  *
  * @param buffer_ptr
  */
 static void buffer_reset(const BufferPtr buffer_ptr);
 /**
- * @brief 释放buffer
+ * @brief 释放_buffer
  *
  * @param buffer_ptr
  */
@@ -122,11 +122,11 @@ buffer_with_capacity(const size_t capacity)
 {
     int8_t *bucket = (int8_t *)rt_malloc(capacity * sizeof(int8_t));
     Buffer buffer = {
-        .buffer = bucket,
-        .position = 0,
-        .limit = 0,
-        .alloc_capacity = capacity,
-        .capacity = capacity,
+        ._buffer = bucket,
+        ._position = 0,
+        ._limit = 0,
+        ._alloc_capacity = capacity,
+        ._capacity = capacity,
     };
     return buffer;
 }
@@ -134,7 +134,7 @@ buffer_with_capacity(const size_t capacity)
 static void buffer_put_byte(const BufferPtr buffer_ptr, const int8_t byte)
 {
     buffer_check_resize(buffer_ptr, 1);
-    buffer_ptr->buffer[buffer_ptr->limit++] = byte;
+    buffer_ptr->_buffer[buffer_ptr->_limit++] = byte;
 }
 
 static void buffer_put_bytes(const BufferPtr buffer_ptr, const int8_t *bytes, const size_t len)
@@ -148,25 +148,25 @@ static void buffer_put_bytes(const BufferPtr buffer_ptr, const int8_t *bytes, co
 
 static int8_t buffer_get_byte(const BufferPtr buffer_ptr)
 {
-    if (buffer_ptr->position < buffer_ptr->limit)
+    if (buffer_ptr->_position < buffer_ptr->_limit)
     {
-        return buffer_ptr->buffer[buffer_ptr->position++];
+        return buffer_ptr->_buffer[buffer_ptr->_position++];
     }
     return RT_NULL;
 }
 
 static int8_t buffer_get_position_byte(const BufferPtr buffer_ptr, size_t position)
 {
-    if (position < buffer_ptr->limit)
+    if (position < buffer_ptr->_limit)
     {
-        return buffer_ptr->buffer[position];
+        return buffer_ptr->_buffer[position];
     }
     return RT_NULL;
 }
 
 static int8_t *buffer_get_bytes(const BufferPtr buffer_ptr, const size_t size)
 {
-    if (buffer_ptr->limit - buffer_ptr->position >= size)
+    if (buffer_ptr->_limit - buffer_ptr->_position >= size)
     {
         int8_t *buffer = (int8_t *)rt_malloc(size * sizeof(int8_t));
         for (size_t i = 0; i < size; i++)
@@ -180,23 +180,23 @@ static int8_t *buffer_get_bytes(const BufferPtr buffer_ptr, const size_t size)
 
 static int8_t *buffer_get_range_bytes(const BufferPtr buffer_ptr, const size_t start, const size_t end)
 {
-    if (start >= end || end >= buffer_ptr->limit)
+    if (start >= end || end >= buffer_ptr->_limit)
     {
         return RT_NULL;
     }
     int8_t *buffer = (int8_t *)rt_malloc((end - start + 1) * sizeof(int8_t));
     for (size_t i = start; i <= end; i++)
     {
-        buffer[i - start] = buffer_ptr->buffer[i];
+        buffer[i - start] = buffer_ptr->_buffer[i];
     }
     return buffer;
 }
 
 static void buffer_check_resize(const BufferPtr buffer_ptr, const size_t put_len)
 {
-    if (buffer_ptr->alloc_capacity - buffer_ptr->limit < put_len)
+    if (buffer_ptr->_alloc_capacity - buffer_ptr->_limit < put_len)
     {
-        const size_t size = buffer_calculate_resize(buffer_ptr->alloc_capacity, buffer_ptr->limit, put_len);
+        const size_t size = buffer_calculate_resize(buffer_ptr->_alloc_capacity, buffer_ptr->_limit, put_len);
         buffer_resize(buffer_ptr, size);
     }
 }
@@ -213,33 +213,33 @@ static size_t buffer_calculate_resize(const size_t now_size, const size_t limit,
 
 static void buffer_resize(const BufferPtr buffer_ptr, const size_t size)
 {
-    buffer_ptr->buffer = (int8_t *)rt_realloc(buffer_ptr->buffer, size * sizeof(int8_t));
-    buffer_ptr->alloc_capacity = size;
+    buffer_ptr->_buffer = (int8_t *)rt_realloc(buffer_ptr->_buffer, size * sizeof(int8_t));
+    buffer_ptr->_alloc_capacity = size;
 }
 
 static void buffer_clear(const BufferPtr buffer_ptr)
 {
-    buffer_ptr->buffer = (int8_t *)rt_memset(buffer_ptr->buffer, 0, buffer_ptr->alloc_capacity * sizeof(int8_t));
-    buffer_ptr->limit = 0;
-    buffer_ptr->position = 0;
+    buffer_ptr->_buffer = (int8_t *)rt_memset(buffer_ptr->_buffer, 0, buffer_ptr->_alloc_capacity * sizeof(int8_t));
+    buffer_ptr->_limit = 0;
+    buffer_ptr->_position = 0;
 }
 
 static void buffer_reset(const BufferPtr buffer_ptr)
 {
-    buffer_ptr->alloc_capacity = buffer_ptr->capacity;
-    buffer_ptr->buffer = (int8_t *)rt_realloc(buffer_ptr->buffer, buffer_ptr->capacity * sizeof(int8_t));
+    buffer_ptr->_alloc_capacity = buffer_ptr->_capacity;
+    buffer_ptr->_buffer = (int8_t *)rt_realloc(buffer_ptr->_buffer, buffer_ptr->_capacity * sizeof(int8_t));
     buffer_clear(buffer_ptr);
 }
 
 static void buffer_free_memory(const BufferPtr buffer_ptr)
 {
-    rt_free(buffer_ptr->buffer);
+    rt_free(buffer_ptr->_buffer);
 }
 
 static char *buffer_ref_string(const BufferPtr buffer_ptr)
 {
     buffer_put_byte(buffer_ptr, '\0');
-    return (char *)(buffer_ptr->buffer);
+    return (char *)(buffer_ptr->_buffer);
 }
 
 const _ByteBuffer ByteBuffer = {

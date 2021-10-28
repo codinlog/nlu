@@ -5,9 +5,9 @@ void test_byte_buffer_put()
 {
     printf("test_byte_buffer_put ============================================\n");
     Buffer buffer = ByteBuffer.allocate(12);
-    printf("buffer.position:%d\n", buffer.position);
-    printf("buffer.limit:%d\n", buffer.limit);
-    printf("buffer.alloc_capacity:%d\n", buffer.alloc_capacity);
+    printf("buffer._position:%d\n", buffer._position);
+    printf("buffer._limit:%d\n", buffer._limit);
+    printf("buffer._alloc_capacity:%d\n", buffer._alloc_capacity);
     ByteBuffer.put_byte(&buffer, 'A');
     ByteBuffer.put_byte(&buffer, 'B');
     ByteBuffer.put_byte(&buffer, 'C');
@@ -21,8 +21,8 @@ void test_byte_buffer_put()
     ByteBuffer.put_byte(&buffer, 'K');
     ByteBuffer.put_byte(&buffer, 'M');
 
-    printf("buffer.position:%d\n", buffer.position);
-    printf("buffer.limit:%d\n", buffer.limit);
+    printf("buffer._position:%d\n", buffer._position);
+    printf("buffer._limit:%d\n", buffer._limit);
 
     printf("buffer get:%c\n", ByteBuffer.get_byte(&buffer));
     printf("buffer get:%c\n", ByteBuffer.get_byte(&buffer));
@@ -49,9 +49,9 @@ void test_byte_buffer_put()
     printf("buffer get:%c\n", ByteBuffer.get_byte(&buffer));
     printf("buffer get:%c\n", ByteBuffer.get_byte(&buffer));
 
-    printf("buffer.position:%d\n", buffer.position);
-    printf("buffer.limit:%d\n", buffer.limit);
-    printf("buffer.alloc_capacity:%d\n", buffer.alloc_capacity);
+    printf("buffer._position:%d\n", buffer._position);
+    printf("buffer._limit:%d\n", buffer._limit);
+    printf("buffer._alloc_capacity:%d\n", buffer._alloc_capacity);
 
     ByteBuffer.drop_memery(&buffer);
     printf("end ============================================\n");
@@ -61,9 +61,9 @@ void test_byte_buffer_puts()
 {
     printf("test_byte_buffer_puts ============================================\n");
     Buffer buffer = ByteBuffer.allocate(12);
-    printf("buffer.position:%d\n", buffer.position);
-    printf("buffer.limit:%d\n", buffer.limit);
-    printf("buffer.alloc_capacity:%d\n", buffer.alloc_capacity);
+    printf("buffer._position:%d\n", buffer._position);
+    printf("buffer._limit:%d\n", buffer._limit);
+    printf("buffer._alloc_capacity:%d\n", buffer._alloc_capacity);
 
     char ch[] = "HelloWorld!\0";
     ByteBuffer.put_bytes(&buffer, ch, strlen(ch));
@@ -85,9 +85,9 @@ void test_byte_buffer_puts()
     }
     rt_free(ch2);
     printf("\n");
-    printf("buffer.position:%d\n", buffer.position);
-    printf("buffer.limit:%d\n", buffer.limit);
-    printf("buffer.alloc_capacity:%d\n", buffer.alloc_capacity);
+    printf("buffer._position:%d\n", buffer._position);
+    printf("buffer._limit:%d\n", buffer._limit);
+    printf("buffer._alloc_capacity:%d\n", buffer._alloc_capacity);
     const char *str = ByteBuffer.ref_string(&buffer);
     printf("buffer to string:%s\n", str);
     rt_free(str);
