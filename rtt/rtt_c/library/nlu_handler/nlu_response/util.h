@@ -11,6 +11,7 @@
 
 #ifndef __NLU_REQUEST_UTIL_H__
 #define __NLU_REQUEST_UTIL_H__
+
 #include <cJSON.h>
 #include <rtthread.h>
 

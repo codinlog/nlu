@@ -9,17 +9,22 @@
  *
  */
 
+#ifndef __NLU_RESPONSE_H__
+#define __NLU_RESPONSE_H__
+
+#include "common/domain_utils.h"
 #include "list/list.h"
 #include "payload/payload.h"
 #include "response/response.h"
-#include "semantic/domain_consts.h"
 #include "semantic/semantic.h"
 #include "status/status.h"
 
 typedef struct
 {
-    StatusPtr status;
-    SemanticPtr semantic;
+    StatusPtr status_ptr;
+    SemanticPtr semantic_ptr;
+    ResponsePtr response_ptr;
+    ListPtr list_ptr;
 } Result, *ResultPtr, *const ResultCPtr;
 
 typedef struct
@@ -28,3 +33,7 @@ typedef struct
     Result (*from_string)(const char *str);
     void (*drop_memory)(const ResultPtr result_ptr);
 } _NluResponse;
+
+extern const _NluResponse NluResponse;
+
+#endif //

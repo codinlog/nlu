@@ -1,7 +1,7 @@
 /**
  * @file music.c
  * @author qr-kou (codinlog@foxmail.com)
- * @brief
+ * @brief 音乐
  * @version 0.1
  * @date 2021-10-26
  *

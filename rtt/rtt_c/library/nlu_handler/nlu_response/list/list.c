@@ -118,7 +118,7 @@ static void list_music_drop_memory(const ListPtr list_ptr)
 }
 
 static List
-list_from_cjson(const cJSON *cjson, ListTypeEnum type)
+list_from_cjson(const cJSON *cjson, DomainTypeEnum type)
 {
     if (type == MUSIC)
     {
@@ -126,7 +126,7 @@ list_from_cjson(const cJSON *cjson, ListTypeEnum type)
     }
 }
 
-static ListCPtr list_from_cjson_to_cptr(const cJSON *cjson, ListTypeEnum type)
+static ListCPtr list_from_cjson_to_cptr(const cJSON *cjson, DomainTypeEnum type)
 {
     if (cjson == RT_NULL)
     {
@@ -143,14 +143,15 @@ static ListCPtr list_from_cjson_to_cptr(const cJSON *cjson, ListTypeEnum type)
         return RT_NULL;
     }
 
-    printf("cjson is not null \0");
     if (type == MUSIC)
     {
         return list_music_from_cjson_to_cptr(cjson);
     }
+
+    return RT_NULL;
 }
 
-static void list_drop_memory(const ListPtr list_ptr, ListTypeEnum type)
+static void list_drop_memory(const ListPtr list_ptr, DomainTypeEnum type)
 {
     if (list_ptr != RT_NULL)
     {
@@ -162,7 +163,7 @@ static void list_drop_memory(const ListPtr list_ptr, ListTypeEnum type)
     }
 }
 
-static void list_drop_memory_and_self(const ListPtr list_ptr, ListTypeEnum type)
+static void list_drop_memory_and_self(const ListPtr list_ptr, DomainTypeEnum type)
 {
     list_drop_memory(list_ptr, type);
     rt_free(list_ptr);
