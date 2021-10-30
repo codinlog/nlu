@@ -18,4 +18,11 @@ typedef struct
     char *content;
 } Joke, *JokePtr, *const JokeCPtr;
 
+typedef struct
+{
+
+} _JokeManager;
+
+extern const _JokeManager JokeManager;
+
 #endif

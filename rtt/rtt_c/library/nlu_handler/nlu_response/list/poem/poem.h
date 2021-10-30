@@ -22,4 +22,11 @@ typedef struct{
     char *dynasty;
 } Poem,*PoemPtr,*const PoemCPtr;
 
+
+typedef struct{
+
+} _PoemManager;
+
+extern const _PoemManager PoemManager;
+
 #endif

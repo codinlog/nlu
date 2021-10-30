@@ -12,6 +12,9 @@
 #ifndef __NLU_RESPONSE__LIST_RADIO_H__
 #define __NLU_RESPONSE__LIST_RADIO_H__
 
+#include <cJSON.h>
+#include <rtthread.h>
+
 typedef struct
 {
     char *url;
@@ -19,5 +22,15 @@ typedef struct
     char *content;
     char *image;
 } Radio, *RadioPtr, *const RadioCPtr;
+
+typedef struct
+{
+    Radio (*from_cjson)(const cJSON *cjosn);
+    RadioCPtr (*from_cjson_to_cptr)(const cJSON *cjson);
+    void (*drop_memory)(const RadioPtr radio_ptr);
+    void (*drop_memory_and_self)(const RadioPtr radio_ptr);
+} _RadioManager;
+
+extern const _RadioManager RadioManager;
 
 #endif
