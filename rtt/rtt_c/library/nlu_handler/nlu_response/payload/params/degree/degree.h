@@ -29,6 +29,7 @@ typedef struct
     DegreeCPtr (*from_cjson_to_cptr)(const cJSON *cjson);
     void (*drop_memory)(const DegreePtr degree_ptr);
     void (*drop_memory_and_self)(const DegreePtr degree_ptr);
+    void (*println)(const DegreePtr degree_ptr);
 } _DegreeManager;
 
 extern const _DegreeManager DegreeManager;

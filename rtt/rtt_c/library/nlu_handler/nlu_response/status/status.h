@@ -29,6 +29,7 @@ typedef struct
     StatusCPtr (*from_cjson_to_cptr)(const cJSON *cjosn);
     void (*drop_memory)(const StatusPtr status_ptr);
     void (*drop_memory_and_self)(const StatusPtr status_ptr);
+    void (*println)(const StatusPtr status_ptr);
 } _StatusManager;
 
 extern const _StatusManager StatusManager;

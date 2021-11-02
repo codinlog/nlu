@@ -58,9 +58,20 @@ static void params_drop_memory_and_self(const ParamsPtr params_ptr)
     rt_free(params_ptr);
 }
 
+static void params_println(const ParamsPtr params_ptr)
+{
+    if (params_ptr == RT_NULL)
+    {
+        return;
+    }
+    rt_printf("tag::params\n");
+    DegreeManager.println(params_ptr->degree);
+    rt_printf("\n");
+}
+
 const _ParamsManager ParamsManager = {
     .from_cjson = params_from_cjson,
     .from_cjson_to_cptr = params_from_cjson_to_cptr,
     .drop_memory = params_drop_memory,
     .drop_memory_and_self = params_drop_memory_and_self,
-};
+    .println = params_println};

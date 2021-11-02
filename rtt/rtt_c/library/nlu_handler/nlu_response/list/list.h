@@ -14,13 +14,14 @@
 
 typedef void *AnyPtr;
 
+#include "joke/joke.h"
+#include "library/nlu_handler/nlu_response/common/domain_utils.h"
 #include "library/nlu_handler/nlu_response/util.h"
 #include "music/music.h"
-#include "library/nlu_handler/nlu_response/common/domain_utils.h"
+#include "poem/poem.h"
+#include "radio/radio.h"
 
 extern const char LIST[];
-
-
 
 typedef struct
 {
@@ -46,11 +47,15 @@ typedef struct
     List (*from_cjson)(const cJSON *cjson, DomainTypeEnum type);
     ListPtr (*from_cjson_to_cptr)(const cJSON *cjson, DomainTypeEnum type);
     rt_bool_t (*has_next)(const ListPtr list_ptr);
+    rt_bool_t (*has_prev)(const ListPtr list_ptr);
+    void (*reiterate)(const ListPtr list_ptr);
     AnyPtr (*next)(const ListPtr list_ptr);
+    AnyPtr (*prev)(const ListPtr list_ptr);
     AnyPtr (*at)(const ListPtr list_ptr, const size_t position);
     void (*foreach)(const ListPtr list_ptr, void (*callback)(AnyPtr item));
     void (*drop_memory)(const ListPtr list_ptr, DomainTypeEnum type);
     void (*drop_memory_and_self)(const ListPtr list_ptr, DomainTypeEnum type);
+    void (*println)(const ListPtr list_ptr, DomainTypeEnum type);
 } _ListManager;
 
 extern const _ListManager ListManager;

@@ -28,8 +28,9 @@ typedef struct
 {
     Response (*from_cjson)(const cJSON *cjson);
     ResponseCPtr (*from_cjson_to_cptr)(const cJSON *cjson);
-    void (*drop_memory)(const ResponsePtr semantic_ptr);
-    void (*drop_memory_and_self)(const ResponsePtr semantic_ptr);
+    void (*drop_memory)(const ResponsePtr response_ptr);
+    void (*drop_memory_and_self)(const ResponsePtr response_ptr);
+    void (*println)(const ResponsePtr response_ptr);
 } _ResponseManager;
 
 extern const _ResponseManager ResponseManager;

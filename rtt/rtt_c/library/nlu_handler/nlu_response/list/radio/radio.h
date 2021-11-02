@@ -9,11 +9,13 @@
  *
  */
 
-#ifndef __NLU_RESPONSE__LIST_RADIO_H__
-#define __NLU_RESPONSE__LIST_RADIO_H__
+#ifndef __NLU_RESPONSE_LIST_RADIO_H__
+#define __NLU_RESPONSE_LIST_RADIO_H__
 
 #include <cJSON.h>
 #include <rtthread.h>
+
+#include "library/nlu_handler/nlu_response/util.h"
 
 typedef struct
 {
@@ -29,6 +31,7 @@ typedef struct
     RadioCPtr (*from_cjson_to_cptr)(const cJSON *cjson);
     void (*drop_memory)(const RadioPtr radio_ptr);
     void (*drop_memory_and_self)(const RadioPtr radio_ptr);
+    void (*println)(const RadioPtr radio_ptr);
 } _RadioManager;
 
 extern const _RadioManager RadioManager;

@@ -106,9 +106,24 @@ static void semantic_drop_memory_self(const SemanticPtr semantic_ptr)
     rt_free(semantic_ptr);
 }
 
+static void semantic_println(const SemanticPtr semantic_ptr)
+{
+    if (semantic_ptr == RT_NULL)
+    {
+        return;
+    }
+    rt_printf("tag::semantic\n");
+    rt_printf("\tdomain:%s\n", semantic_ptr->domain);
+    rt_printf("\tintent:%s\n", semantic_ptr->intent);
+    rt_printf("\tsession_complete:%d\n", semantic_ptr->session_complete);
+    rt_printf("\tskill:%s\n", semantic_ptr->skill);
+    rt_printf("\n");
+}
+
 const _SemanticManager SemanticManager = {
     .from_cjson = semantic_from_cjson,
     .from_cjson_to_cptr = semantic_from_cjson_to_cptr,
     .drop_memory = semantic_drop_memory,
     .drop_memory_and_self = semantic_drop_memory_self,
+    .println = semantic_println,
 };

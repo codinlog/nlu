@@ -1,7 +1,7 @@
 /**
  * @file music.h
  * @author qr-kou (codinlog@foxmail.com)
- * @brief
+ * @brief 音乐
  * @version 0.1
  * @date 2021-10-26
  *
@@ -33,6 +33,7 @@ typedef struct
     MusicCPtr (*from_cjson_to_cptr)(const cJSON *cjson);
     void (*drop_memory)(const MusicPtr music_ptr);
     void (*drop_memory_and_self)(const MusicPtr music_ptr);
+    void (*println)(const MusicPtr music_ptr);
 } _MusicManager;
 
 extern const _MusicManager MusicManager;

@@ -67,7 +67,6 @@ void test_nlu_handler()
             if (!cJSON_IsNull(response_cjson))
             {
                 const List list = ListManager.from_cjson(list_cjosn, MUSIC);
-                printf("list._size:%ld\n", list._size);
                 while (ListManager.has_next(&list))
                 {
                     MusicPtr music_ptr = (MusicPtr)ListManager.next(&list);

@@ -13,6 +13,9 @@
 extern const char DOMAIN_MUSTC[];
 extern const char DOMAIN_CONTROL[];
 extern const char DOMAIN_HOLIDAY[];
+extern const char DOMAIN_JOKE[];
+extern const char DOMAIN_POEM[];
+extern const char DOMAIN_RADIO[];
 
 
 

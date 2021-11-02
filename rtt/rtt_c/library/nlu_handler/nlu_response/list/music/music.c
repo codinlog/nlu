@@ -117,9 +117,26 @@ static void music_drop_memory_and_self(const MusicPtr music_ptr)
     rt_free(music_ptr);
 }
 
+static void music_println(const MusicPtr music_ptr)
+{
+    if (music_ptr == RT_NULL)
+    {
+        return;
+    }
+    rt_printf("tag::music\n");
+    rt_printf("\turl:%s\n", music_ptr->url);
+    rt_printf("\tsinger:%s\n", music_ptr->singer);
+    rt_printf("\tsong:%s\n", music_ptr->song);
+    rt_printf("\timage:%s\n", music_ptr->image);
+    rt_printf("\talbum:%s\n", music_ptr->album);
+    rt_printf("\tsong_id:%s\n", music_ptr->song_id);
+    rt_printf("\n");
+}
+
 const _MusicManager MusicManager = {
     .from_cjson = music_from_cjson,
     .from_cjson_to_cptr = music_from_cjson_to_cptr,
     .drop_memory = music_drop_memory,
     .drop_memory_and_self = music_drop_memory_and_self,
+    .println = music_println,
 };

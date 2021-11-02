@@ -76,9 +76,22 @@ static void status_drop_memory_and_self(const StatusPtr status_ptr)
     rt_free(status_ptr);
 }
 
+static void status_println(const StatusPtr status_ptr)
+{
+    if (status_ptr == RT_NULL)
+    {
+        return;
+    }
+    rt_printf("tag::status\n");
+    rt_printf("\tcode:%d\n", status_ptr->code);
+    rt_printf("\terror_type:%s\n", status_ptr->error_type);
+    rt_printf("\n");
+}
+
 const _StatusManager StatusManager = {
     .from_cjson = status_from_cjson,
     .from_cjson_to_cptr = status_from_cjson_to_cptr,
     .drop_memory = status_drop_memory,
     .drop_memory_and_self = status_drop_memory_and_self,
+    .println = status_println,
 };

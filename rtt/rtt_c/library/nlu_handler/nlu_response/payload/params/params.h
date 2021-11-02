@@ -28,6 +28,7 @@ typedef struct
     ParamsCPtr (*from_cjson_to_cptr)(const cJSON *cjson);
     void (*drop_memory)(const ParamsPtr params_ptr);
     void (*drop_memory_and_self)(const ParamsPtr params_ptr);
+    void (*println)(const ParamsPtr params_ptr);
 } _ParamsManager;
 
 extern const _ParamsManager ParamsManager;

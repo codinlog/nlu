@@ -91,9 +91,24 @@ static void degree_drop_memory_and_self(const DegreePtr degree_ptr)
     rt_free(degree_ptr);
 }
 
+static void degree_println(const DegreePtr degree_ptr)
+{
+
+    if (degree_ptr == RT_NULL)
+    {
+        return;
+    }
+    rt_printf("tag::degree\n");
+    rt_printf("\torgin:%s", degree_ptr->orgin);
+    rt_printf("\tnorm:%s", degree_ptr->norm);
+    rt_printf("\tcode:%d", degree_ptr->code);
+    rt_printf("\n");
+}
+
 const _DegreeManager DegreeManager = {
     .from_cjson = degree_from_cjson,
     .from_cjson_to_cptr = degree_from_cjson_to_cptr,
     .drop_memory = degree_drop_memory,
     .drop_memory_and_self = degree_drop_memory_and_self,
+    .println = degree_println,
 };

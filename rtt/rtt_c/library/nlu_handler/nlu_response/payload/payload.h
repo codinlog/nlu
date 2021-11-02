@@ -31,6 +31,7 @@ typedef struct
     PayloadCPtr (*from_cjson_to_cptr)(const cJSON *cjson);
     void (*drop_memory)(const PayloadPtr payload_ptr);
     void (*drop_memory_and_self)(const PayloadPtr payload_ptr);
+    void (*println)(const PayloadPtr payload_ptr);
 } _PayloadManager;
 
 extern const _PayloadManager PayloadManager;

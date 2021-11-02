@@ -28,12 +28,28 @@ static AnyPtr list_next(const ListPtr list_ptr)
     return (list_ptr->_item[list_ptr->_cursor++]);
 }
 
+static AnyPtr list_prev(const ListPtr list_ptr)
+{
+    return (list_ptr->_item[list_ptr->_cursor--]);
+}
+
 static rt_bool_t list_has_next(const ListPtr list_ptr)
 {
     return list_ptr->_size > list_ptr->_cursor;
 }
 
-static void list_foreach(const ListPtr list_ptr, void (*callback)(const AnyPtr item))
+static rt_bool_t list_has_prev(const ListPtr list_ptr)
+{
+    return list_ptr->_cursor < 0;
+}
+
+static void list_reiterate(const ListPtr list_ptr)
+{
+    list_ptr->_cursor = 0;
+}
+
+static void
+list_foreach(const ListPtr list_ptr, void (*callback)(const AnyPtr item))
 {
     for (size_t i = 0; i < list_ptr->_size; i++)
     {
@@ -169,13 +185,71 @@ static void list_drop_memory_and_self(const ListPtr list_ptr, DomainTypeEnum typ
     rt_free(list_ptr);
 }
 
+static void list_println_music_entry(const AnyPtr item)
+{
+    const MusicPtr music_ptr = (MusicPtr)item;
+    MusicManager.println(music_ptr);
+}
+
+static void list_println_joke_entry(const AnyPtr item)
+{
+    const JokePtr joke_ptr = (JokePtr)item;
+    JokeManager.println(joke_ptr);
+}
+
+static void list_println_radio_entry(const AnyPtr item)
+{
+    const RadioPtr radio_ptr = (RadioPtr)item;
+    RadioManager.println(radio_ptr);
+}
+
+static void list_println_poem_entry(const AnyPtr item)
+{
+    const PoemPtr poem_ptr = (PoemPtr)item;
+    PoemManager.println(poem_ptr);
+}
+
+static void list_println(const ListPtr list_ptr, DomainTypeEnum type)
+{
+    rt_printf("tag::list\n");
+    switch (type)
+    {
+    case MUSIC:
+    {
+        ListManager.foreach (list_ptr, list_println_music_entry);
+    }
+    break;
+    case JOKE:
+    {
+        ListManager.foreach (list_ptr, list_println_joke_entry);
+    }
+    break;
+    case RADIO:
+    {
+        ListManager.foreach (list_ptr, list_println_radio_entry);
+    }
+    break;
+    case POEM:
+    {
+        ListManager.foreach (list_ptr, list_println_poem_entry);
+    }
+    break;
+    }
+
+    rt_printf("\n");
+}
+
 const _ListManager ListManager = {
     .from_cjson = list_from_cjson,
     .from_cjson_to_cptr = list_from_cjson_to_cptr,
     .has_next = list_has_next,
+    .has_prev = list_has_prev,
     .next = list_next,
+    .prev = list_prev,
+    .reiterate = list_reiterate,
     .at = list_at,
     .foreach = list_foreach,
     .drop_memory = list_drop_memory,
     .drop_memory_and_self = list_drop_memory_and_self,
+    .println = list_println,
 };

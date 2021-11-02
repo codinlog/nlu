@@ -83,9 +83,23 @@ static void payload_drop_memery_and_self(const PayloadPtr payload_ptr)
     rt_free(payload_ptr);
 }
 
+static void payload_println(const PayloadPtr payload_ptr)
+{
+    if (payload_ptr == RT_NULL)
+    {
+        return;
+    }
+    rt_printf("tag::payload\n");
+    rt_printf("\tservice:%s\n", payload_ptr->service);
+    rt_printf("\taction:%s\n", payload_ptr->action);
+    ParamsManager.println(payload_ptr->params);
+    rt_printf("\n");
+}
+
 const _PayloadManager PayloadManager = {
     .from_cjson = payload_from_cjson,
     .from_cjson_to_cptr = payload_from_cjson_to_cptr,
     .drop_memory = payload_drop_memery,
     .drop_memory_and_self = payload_drop_memery_and_self,
+    .println = payload_println,
 };

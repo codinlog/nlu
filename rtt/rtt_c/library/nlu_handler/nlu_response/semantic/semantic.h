@@ -31,6 +31,7 @@ typedef struct
     SemanticCPtr (*from_cjson_to_cptr)(const cJSON *cjson);
     void (*drop_memory)(const SemanticPtr semantic_ptr);
     void (*drop_memory_and_self)(const SemanticPtr semantic_ptr);
+    void (*println)(const SemanticPtr semantic_ptr);
 } _SemanticManager;
 extern const _SemanticManager SemanticManager;
 #endif //

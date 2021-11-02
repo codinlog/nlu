@@ -94,9 +94,22 @@ static void response_drop_memory_and_self(const ResponsePtr response_ptr)
     rt_free(response_ptr);
 }
 
+static void response_println(const ResponsePtr response_ptr)
+{
+    if (response_ptr == RT_NULL)
+    {
+        return;
+    }
+    rt_printf("tag::response\n");
+    rt_printf("\ttext:%s\n", response_ptr->text);
+    rt_printf("\thint:%s\n", response_ptr->hint);
+    rt_printf("\n");
+}
+
 const _ResponseManager ResponseManager = {
     .from_cjson = response_from_cjson,
     .from_cjson_to_cptr = response_from_cjson_to_cptr,
     .drop_memory = response_drop_memory,
     .drop_memory_and_self = response_drop_memory_and_self,
+    .println = response_println,
 };
